@@ -1,90 +1,434 @@
 # API DE JAVA — Biblioteca
 
-Projeto acadêmico de API REST para gerenciamento de uma biblioteca, desenvolvido com Spring Boot.
+Projeto acadêmico desenvolvido para a disciplina de Desenvolvimento de APIs com Spring Boot.
 
-## Escopo atual
+## 1. Objetivo do projeto
 
-Este repositório contempla **somente os Requisitos Técnicos - Parte 1** do trabalho.
+Desenvolver uma API REST para o gerenciamento de uma biblioteca, aplicando os conceitos estudados em Spring Boot, persistência de dados com JPA, banco de dados H2, validações, paginação, documentação com Swagger e HATEOAS.
 
-### Requisitos atendidos
+O projeto contempla **somente os Requisitos Técnicos - Parte 1** da atividade.
 
-- Spring Boot
+---
+
+## 2. Tecnologias utilizadas
+
 - Java 21
+- Spring Boot
 - Maven
-- Banco H2
+- Spring Web MVC
 - Spring Data JPA
-- Mínimo de 5 entidades
-- Relacionamentos One-to-One, One-to-Many e Many-to-Many
+- H2 Database
 - Bean Validation
-- Enum
-- CRUD completo para cada entidade
-- Mínimo de 5 endpoints REST por entidade
-- Paginação com Pageable
-- Consulta personalizada por entidade
-- Status HTTP adequados
-- Swagger/OpenAPI
-- HATEOAS com EntityModel/PagedModel
+- Spring HATEOAS
+- Springdoc OpenAPI / Swagger
 
-## Domínio
+---
 
-A API representa uma biblioteca e será composta por:
+## 3. Estrutura do projeto
 
-- Usuario
-- Perfil
-- Autor
-- Categoria
-- Livro
-- Emprestimo
-
-## Relacionamentos planejados
-
-- Usuario 1:1 Perfil
-- Usuario 1:N Emprestimo
-- Categoria 1:N Livro
-- Livro 1:N Emprestimo
-- Livro N:N Autor
-
-## Planejamento
-
-- [x] Estrutura inicial do projeto
-- [x] Configuração H2 e JPA
-- [x] Enums iniciais
-- [ ] Entidades e relacionamentos
-- [ ] Bean Validation
-- [ ] Repositories
-- [ ] Services
-- [ ] Controllers e CRUD
-- [ ] Paginação
-- [ ] Consultas personalizadas
-- [ ] Tratamento de erros e status HTTP
-- [ ] Swagger/OpenAPI
-- [ ] HATEOAS
-- [ ] Testes finais
-
-## Como executar
-
-Abra a pasta `biblioteca-api` no IntelliJ e configure o **JDK 21**.
-
-Execute:
+O projeto está organizado de forma simples e objetiva.
 
 ```text
-BibliotecaApplication.java
+com.senac.biblioteca
+│
+├── BibliotecaApplication.java
+├── controller
+├── entity
+├── enums
+├── repository
+├── exception
+└── config
 ```
 
-A aplicação utiliza:
+Responsabilidade de cada pacote:
+
+- `entity`: representa as tabelas do banco de dados;
+- `repository`: realiza o acesso aos dados com Spring Data JPA;
+- `controller`: recebe as requisições HTTP e disponibiliza os endpoints REST;
+- `enums`: armazena valores fixos utilizados pelas entidades;
+- `exception`: tratamento de erros da API;
+- `config`: configurações gerais, como Swagger.
+
+---
+
+## 4. Entidades do sistema
+
+A API será composta pelas seguintes entidades:
+
+### Usuario
+
+Representa o usuário cadastrado na biblioteca.
+
+Principais dados:
+
+- id
+- nome
+- email
+
+### Perfil
+
+Armazena informações complementares do usuário.
+
+Principais dados:
+
+- id
+- telefone
+- endereco
+- data de nascimento
+
+### Autor
+
+Representa o autor de um ou mais livros.
+
+Principais dados:
+
+- id
+- nome
+
+### Categoria
+
+Representa a categoria de um livro.
+
+Exemplos:
+
+- Romance
+- Tecnologia
+- Ficção
+- História
+
+### Livro
+
+Representa um livro cadastrado na biblioteca.
+
+Principais dados:
+
+- id
+- titulo
+- isbn
+- ano de publicação
+- categoria
+- autores
+
+### Emprestimo
+
+Representa o empréstimo de um livro para um usuário.
+
+Principais dados:
+
+- id
+- usuario
+- livro
+- data do empréstimo
+- data prevista para devolução
+- status
+
+---
+
+## 5. Relacionamentos
+
+O projeto utiliza os três tipos de relacionamento exigidos na atividade.
+
+### One-to-One
 
 ```text
-http://localhost:8080
+Usuario 1 -------- 1 Perfil
 ```
 
-Swagger:
+Cada usuário possui um único perfil e cada perfil pertence a um único usuário.
+
+### One-to-Many
+
+```text
+Categoria 1 -------- N Livro
+```
+
+Uma categoria pode possuir vários livros, mas cada livro pertence a uma categoria.
+
+Também existem os relacionamentos:
+
+```text
+Usuario 1 -------- N Emprestimo
+Livro   1 -------- N Emprestimo
+```
+
+### Many-to-Many
+
+```text
+Livro N -------- N Autor
+```
+
+Um livro pode possuir vários autores e um autor pode participar de vários livros.
+
+---
+
+## 6. Enum
+
+O projeto utiliza enum para representar valores fixos.
+
+Exemplo:
+
+```java
+public enum StatusEmprestimo {
+    ATIVO,
+    DEVOLVIDO,
+    ATRASADO
+}
+```
+
+O enum evita o uso de textos livres para representar o status do empréstimo.
+
+---
+
+## 7. Validações
+
+Os dados recebidos pela API serão validados utilizando Bean Validation.
+
+Exemplos de validações utilizadas:
+
+```java
+@NotBlank
+@Email
+@Size
+@NotNull
+```
+
+Exemplo:
+
+```java
+@NotBlank
+private String nome;
+
+@Email
+@NotBlank
+private String email;
+```
+
+Caso os dados enviados não sejam válidos, a API deverá retornar um erro HTTP adequado.
+
+---
+
+## 8. Operações CRUD
+
+Cada entidade possuirá operações CRUD completas.
+
+### Criar
+
+```http
+POST /usuarios
+```
+
+### Listar
+
+```http
+GET /usuarios
+```
+
+### Buscar por ID
+
+```http
+GET /usuarios/{id}
+```
+
+### Atualizar
+
+```http
+PUT /usuarios/{id}
+```
+
+### Excluir
+
+```http
+DELETE /usuarios/{id}
+```
+
+Além do CRUD, cada entidade terá pelo menos uma consulta personalizada.
+
+Exemplo:
+
+```http
+GET /usuarios/buscar?nome=Henrique
+```
+
+---
+
+## 9. Paginação
+
+Todas as rotas de listagem utilizarão `Pageable`.
+
+Exemplo:
+
+```http
+GET /livros?page=0&size=10
+```
+
+Também poderá ser utilizado ordenamento:
+
+```http
+GET /livros?page=0&size=10&sort=titulo,asc
+```
+
+---
+
+## 10. Códigos HTTP
+
+A API utilizará códigos HTTP adequados para cada operação.
+
+| Situação | Código |
+|---|---:|
+| Requisição realizada com sucesso | 200 OK |
+| Recurso criado | 201 Created |
+| Exclusão realizada | 204 No Content |
+| Dados inválidos | 400 Bad Request |
+| Recurso não encontrado | 404 Not Found |
+| Erro interno | 500 Internal Server Error |
+
+---
+
+## 11. Swagger / OpenAPI
+
+Todos os endpoints serão documentados utilizando Springdoc OpenAPI.
+
+A documentação permitirá visualizar:
+
+- rotas disponíveis;
+- métodos HTTP;
+- parâmetros;
+- exemplos de requisição;
+- possíveis códigos de resposta.
+
+Após executar o projeto, o Swagger poderá ser acessado em:
 
 ```text
 http://localhost:8080/swagger-ui.html
 ```
 
-H2 Console:
+---
+
+## 12. HATEOAS
+
+A API utilizará Spring HATEOAS para incluir links relacionados nas respostas.
+
+Exemplo simplificado:
+
+```json
+{
+  "id": 1,
+  "nome": "Henrique",
+  "_links": {
+    "self": {
+      "href": "/usuarios/1"
+    },
+    "update": {
+      "href": "/usuarios/1"
+    },
+    "delete": {
+      "href": "/usuarios/1"
+    }
+  }
+}
+```
+
+Serão utilizados recursos como:
+
+- `EntityModel`
+- `PagedModel`
+
+---
+
+## 13. Banco de dados H2
+
+O projeto utiliza o banco H2 em memória.
+
+Configuração principal:
+
+```properties
+spring.datasource.url=jdbc:h2:mem:biblioteca
+spring.datasource.username=sa
+spring.datasource.password=
+```
+
+Console do H2:
 
 ```text
 http://localhost:8080/h2-console
 ```
+
+Dados de acesso:
+
+```text
+JDBC URL: jdbc:h2:mem:biblioteca
+User Name: sa
+Password: vazio
+```
+
+---
+
+## 14. Como executar
+
+Requisitos:
+
+- Java 21
+- IntelliJ IDEA ou outra IDE Java
+- Maven
+
+Passos:
+
+1. Abrir a pasta `biblioteca-api` no IntelliJ.
+2. Configurar o JDK 21.
+3. Aguardar o Maven baixar as dependências.
+4. Executar a classe:
+
+```text
+BibliotecaApplication.java
+```
+
+Quando a aplicação iniciar corretamente, será exibida uma mensagem semelhante a:
+
+```text
+Started BibliotecaApplication
+```
+
+A API estará disponível em:
+
+```text
+http://localhost:8080
+```
+
+---
+
+## 15. Checklist dos requisitos da Parte 1
+
+| Requisito | Implementação no projeto |
+|---|---|
+| Spring Boot | Sim |
+| Java 17 ou superior | Java 21 |
+| Maven ou Gradle | Maven |
+| H2 | Sim |
+| Spring Data JPA | Sim |
+| Mínimo de 5 entidades | 6 entidades |
+| One-to-One | Usuario x Perfil |
+| One-to-Many | Categoria x Livro / Usuario x Emprestimo |
+| Many-to-Many | Livro x Autor |
+| Bean Validation | Sim |
+| Enum | StatusEmprestimo |
+| CRUD completo | Previsto para todas as entidades |
+| 5 endpoints por entidade | Sim |
+| Pageable | Sim |
+| Consulta personalizada | Uma por entidade |
+| Status HTTP | Sim |
+| Swagger/OpenAPI | Sim |
+| HATEOAS | Sim |
+
+---
+
+## 16. Escopo
+
+Este projeto está limitado aos requisitos da **Parte 1** da atividade.
+
+Não fazem parte desta etapa:
+
+- autenticação por API Key;
+- idempotência;
+- rate limiting;
+- versionamento da API;
+- recursos avançados previstos para etapas futuras.
