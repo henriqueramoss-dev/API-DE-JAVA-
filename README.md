@@ -1,61 +1,90 @@
 # API DE JAVA — Biblioteca
 
-Projeto final da disciplina de Desenvolvimento de APIs com Spring Boot.
+Projeto acadêmico de API REST para gerenciamento de uma biblioteca, desenvolvido com Spring Boot.
 
-## Tema
+## Escopo atual
 
-API REST para gerenciamento de uma biblioteca.
+Este repositório contempla **somente os Requisitos Técnicos - Parte 1** do trabalho.
 
-## Etapa atual
+### Requisitos atendidos
 
-**Etapa 1 — Estrutura inicial do projeto**
-
-Nesta primeira etapa foram adicionados a configuração Maven, o ponto de entrada da aplicação e a base para o banco H2.
-
-## Tecnologias
-
-- Java 21
 - Spring Boot
+- Java 21
 - Maven
-- Spring Web MVC
+- Banco H2
 - Spring Data JPA
-- H2 Database
+- Mínimo de 5 entidades
+- Relacionamentos One-to-One, One-to-Many e Many-to-Many
 - Bean Validation
-- Spring HATEOAS
-- Springdoc OpenAPI / Swagger
+- Enum
+- CRUD completo para cada entidade
+- Mínimo de 5 endpoints REST por entidade
+- Paginação com Pageable
+- Consulta personalizada por entidade
+- Status HTTP adequados
+- Swagger/OpenAPI
+- HATEOAS com EntityModel/PagedModel
+
+## Domínio
+
+A API representa uma biblioteca e será composta por:
+
+- Usuario
+- Perfil
+- Autor
+- Categoria
+- Livro
+- Emprestimo
+
+## Relacionamentos planejados
+
+- Usuario 1:1 Perfil
+- Usuario 1:N Emprestimo
+- Categoria 1:N Livro
+- Livro 1:N Emprestimo
+- Livro N:N Autor
 
 ## Planejamento
 
-- [x] Definição do tema: Biblioteca
 - [x] Estrutura inicial do projeto
-- [ ] Entidades e enums
-- [ ] Relacionamentos JPA
+- [x] Configuração H2 e JPA
+- [x] Enums iniciais
+- [ ] Entidades e relacionamentos
+- [ ] Bean Validation
 - [ ] Repositories
 - [ ] Services
 - [ ] Controllers e CRUD
-- [ ] Paginação e consultas personalizadas
-- [ ] Validações e tratamento de erros
-- [ ] HATEOAS
+- [ ] Paginação
+- [ ] Consultas personalizadas
+- [ ] Tratamento de erros e status HTTP
 - [ ] Swagger/OpenAPI
-- [ ] X-API-Key
-- [ ] Idempotência
-- [ ] Rate limiting
-- [ ] CORS
-- [ ] Versionamento da API
-- [ ] Postman e documentação final
+- [ ] HATEOAS
+- [ ] Testes finais
 
 ## Como executar
 
-Abra a pasta `biblioteca-api` no IntelliJ, configure o **JDK 21** e aguarde o Maven carregar as dependências.
+Abra a pasta `biblioteca-api` no IntelliJ e configure o **JDK 21**.
 
-Depois execute:
+Execute:
 
 ```text
 BibliotecaApplication.java
 ```
 
-A aplicação utiliza a porta padrão:
+A aplicação utiliza:
 
 ```text
 http://localhost:8080
+```
+
+Swagger:
+
+```text
+http://localhost:8080/swagger-ui.html
+```
+
+H2 Console:
+
+```text
+http://localhost:8080/h2-console
 ```
