@@ -1,5 +1,6 @@
 package com.senac.biblioteca.controller;
 
+import com.senac.biblioteca.assembler.AutorModelAssembler;
 import com.senac.biblioteca.entity.Autor;
 import com.senac.biblioteca.service.AutorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -7,8 +8,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,56 +25,87 @@ import org.springframework.web.bind.annotation.*;
 public class AutorController {
 
     private final AutorService service;
+    private final AutorModelAssembler assembler;
+    private final PagedResourcesAssembler<Autor> pagedResourcesAssembler;
 
-    public AutorController(AutorService service) {
+    public AutorController(
+        AutorService service,
+        AutorModelAssembler assembler,
+        PagedResourcesAssembler<Autor> pagedResourcesAssembler
+    ) {
         this.service = service;
+        this.assembler = assembler;
+        this.pagedResourcesAssembler = pagedResourcesAssembler;
     }
 
     @GetMapping
-    @Operation(summary = "Listar autores", description = "Retorna os autores cadastrados de forma paginada.")
-    @ApiResponse(responseCode = "200", description = "Autores listados com sucesso")
-    public Page<Autor> listar(Pageable pageable) {
-        return service.listar(pageable);
+    @Operation(
+        summary = "Listar autores",
+        description = "Retorna os autores cadastrados de forma paginada."
+    )
+    @ApiResponse(responseCode = "200", description = "Listagem realizada com sucesso")
+    public ResponseEntity<PagedModel<EntityModel<Autor>>> listar(
+        @ParameterObject @PageableDefault(size = 10, page = 0, sort = "id") Pageable pageable
+    ) {
+        Page<Autor> pagina = service.listar(pageable);
+        return ResponseEntity.ok(pagedResourcesAssembler.toModel(pagina, assembler));
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar autor por ID", description = "Retorna um autor pelo seu identificador.")
+    @Operation(
+        summary = "Buscar autor por ID",
+        description = "Retorna um autor a partir do seu identificador."
+    )
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Autor encontrado"),
         @ApiResponse(responseCode = "404", description = "Autor não encontrado")
     })
-    public ResponseEntity<Autor> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<EntityModel<Autor>> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
+            .map(assembler::toModel)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    @Operation(summary = "Cadastrar autor", description = "Cria um novo autor na biblioteca.")
+    @Operation(
+        summary = "Cadastrar autor",
+        description = "Cria um novo autor na biblioteca."
+    )
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Autor criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos")
     })
-    public ResponseEntity<Autor> criar(@Valid @RequestBody Autor autor) {
-        Autor criado = service.criar(autor);
-        return ResponseEntity.status(HttpStatus.CREATED).body(criado);
+    public ResponseEntity<EntityModel<Autor>> criar(@Valid @RequestBody Autor item) {
+        Autor criado = service.criar(item);
+        return ResponseEntity.status(HttpStatus.CREATED).body(assembler.toModel(criado));
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Atualizar autor", description = "Atualiza o nome de um autor existente.")
+    @Operation(
+        summary = "Atualizar autor",
+        description = "Atualiza o nome de um autor existente."
+    )
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Autor atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos"),
         @ApiResponse(responseCode = "404", description = "Autor não encontrado")
     })
-    public ResponseEntity<Autor> atualizar(@PathVariable Long id, @Valid @RequestBody Autor autor) {
-        return service.atualizar(id, autor)
+    public ResponseEntity<EntityModel<Autor>> atualizar(
+        @PathVariable Long id,
+        @Valid @RequestBody Autor item
+    ) {
+        return service.atualizar(id, item)
+            .map(assembler::toModel)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Excluir autor", description = "Exclui um autor pelo seu identificador.")
+    @Operation(
+        summary = "Excluir autor",
+        description = "Exclui um autor pelo seu identificador."
+    )
     @ApiResponses({
         @ApiResponse(responseCode = "204", description = "Autor excluído com sucesso"),
         @ApiResponse(responseCode = "404", description = "Autor não encontrado")
@@ -77,13 +114,21 @@ public class AutorController {
         if (!service.excluir(id)) {
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/buscar")
-    @Operation(summary = "Buscar autores por nome", description = "Busca autores cujo nome contém o texto informado.")
+    @Operation(
+        summary = "Buscar autores por nome",
+        description = "Busca autores cujo nome contém o texto informado."
+    )
     @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso")
-    public Page<Autor> buscarPorNome(@RequestParam String nome, Pageable pageable) {
-        return service.buscarPorNome(nome, pageable);
+    public ResponseEntity<PagedModel<EntityModel<Autor>>> buscar(
+        @RequestParam String nome,
+        @ParameterObject @PageableDefault(size = 10, page = 0, sort = "id") Pageable pageable
+    ) {
+        Page<Autor> pagina = service.buscarPorNome(nome, pageable);
+        return ResponseEntity.ok(pagedResourcesAssembler.toModel(pagina, assembler));
     }
 }
