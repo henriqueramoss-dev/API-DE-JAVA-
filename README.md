@@ -286,17 +286,62 @@ A API utilizará códigos HTTP adequados para cada operação.
 
 ## 11. Swagger / OpenAPI
 
-Todos os endpoints serão documentados utilizando Springdoc OpenAPI.
+A API utiliza **Springdoc OpenAPI** para gerar a documentação interativa dos endpoints.
 
-A documentação permitirá visualizar:
+A configuração geral está na classe:
 
-- rotas disponíveis;
-- métodos HTTP;
+```text
+config/OpenApiConfig.java
+```
+
+Ela define:
+
+- título da API;
+- versão;
+- descrição geral do projeto.
+
+Além disso, a documentação será feita diretamente nos controllers usando:
+
+```java
+@Operation
+@ApiResponses
+@ApiResponse
+```
+
+Os campos das entidades utilizam `@Schema` para fornecer descrições e exemplos.
+
+Exemplo:
+
+```java
+@Schema(
+    description = "Nome do usuário",
+    example = "Henrique Ramos"
+)
+private String nome;
+```
+
+Cada endpoint deverá informar:
+
+- objetivo da operação;
+- descrição;
 - parâmetros;
-- exemplos de requisição;
-- possíveis códigos de resposta.
+- exemplo quando necessário;
+- possíveis códigos HTTP de resposta.
 
-Após executar o projeto, o Swagger poderá ser acessado em:
+Exemplo de documentação de endpoint:
+
+```java
+@Operation(
+    summary = "Lista todos os usuários",
+    description = "Retorna os usuários cadastrados de forma paginada."
+)
+@ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Usuários encontrados com sucesso"),
+    @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+})
+```
+
+Depois que os controllers forem implementados, todas as rotas poderão ser visualizadas em:
 
 ```text
 http://localhost:8080/swagger-ui.html
