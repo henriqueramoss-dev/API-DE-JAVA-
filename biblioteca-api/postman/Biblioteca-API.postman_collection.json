@@ -1,0 +1,441 @@
+{
+  "info": {
+    "name": "Biblioteca API - Parte 1",
+    "description": "Coleção Postman para testar os endpoints da API de Biblioteca.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "usuarioId",
+      "value": "1"
+    },
+    {
+      "key": "perfilId",
+      "value": "1"
+    },
+    {
+      "key": "autorId",
+      "value": "1"
+    },
+    {
+      "key": "categoriaId",
+      "value": "1"
+    },
+    {
+      "key": "livroId",
+      "value": "1"
+    },
+    {
+      "key": "emprestimoId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Criar usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Henrique Ramos\",\n  \"email\": \"henrique@email.com\"\n}"
+            },
+            "url": "{{baseUrl}}/usuarios"
+          }
+        },
+        {
+          "name": "Listar usuarios",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/usuarios?page=0&size=10"
+          }
+        },
+        {
+          "name": "Buscar usuario por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/usuarios/{{usuarioId}}"
+          }
+        },
+        {
+          "name": "Buscar usuarios por nome",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/usuarios/buscar?nome=Henrique&page=0&size=10"
+          }
+        },
+        {
+          "name": "Atualizar usuario",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Henrique Ramos Atualizado\",\n  \"email\": \"henrique.atualizado@email.com\"\n}"
+            },
+            "url": "{{baseUrl}}/usuarios/{{usuarioId}}"
+          }
+        },
+        {
+          "name": "Excluir usuario",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/usuarios/{{usuarioId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Perfis",
+      "item": [
+        {
+          "name": "Criar perfil",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"telefone\": \"11999999999\",\n  \"endereco\": \"Rua Exemplo, 100\",\n  \"dataNascimento\": \"2000-05-10\",\n  \"usuario\": {\n    \"id\": 1\n  }\n}"
+            },
+            "url": "{{baseUrl}}/perfis"
+          }
+        },
+        {
+          "name": "Listar perfis",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/perfis?page=0&size=10"
+          }
+        },
+        {
+          "name": "Buscar perfil por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/perfis/{{perfilId}}"
+          }
+        },
+        {
+          "name": "Buscar perfis por telefone",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/perfis/buscar?telefone=1199&page=0&size=10"
+          }
+        },
+        {
+          "name": "Atualizar perfil",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"telefone\": \"11888888888\",\n  \"endereco\": \"Avenida Exemplo, 200\",\n  \"dataNascimento\": \"2000-05-10\",\n  \"usuario\": {\n    \"id\": 1\n  }\n}"
+            },
+            "url": "{{baseUrl}}/perfis/{{perfilId}}"
+          }
+        },
+        {
+          "name": "Excluir perfil",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/perfis/{{perfilId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Autores",
+      "item": [
+        {
+          "name": "Criar autor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Machado de Assis\"\n}"
+            },
+            "url": "{{baseUrl}}/autores"
+          }
+        },
+        {
+          "name": "Listar autores",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/autores?page=0&size=10"
+          }
+        },
+        {
+          "name": "Buscar autor por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/autores/{{autorId}}"
+          }
+        },
+        {
+          "name": "Buscar autores por nome",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/autores/buscar?nome=Machado&page=0&size=10"
+          }
+        },
+        {
+          "name": "Atualizar autor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Machado de Assis Atualizado\"\n}"
+            },
+            "url": "{{baseUrl}}/autores/{{autorId}}"
+          }
+        },
+        {
+          "name": "Excluir autor",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/autores/{{autorId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorias",
+      "item": [
+        {
+          "name": "Criar categoria",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Romance\"\n}"
+            },
+            "url": "{{baseUrl}}/categorias"
+          }
+        },
+        {
+          "name": "Listar categorias",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categorias?page=0&size=10"
+          }
+        },
+        {
+          "name": "Buscar categoria por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categorias/{{categoriaId}}"
+          }
+        },
+        {
+          "name": "Buscar categorias por nome",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categorias/buscar?nome=Romance&page=0&size=10"
+          }
+        },
+        {
+          "name": "Atualizar categoria",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Literatura Brasileira\"\n}"
+            },
+            "url": "{{baseUrl}}/categorias/{{categoriaId}}"
+          }
+        },
+        {
+          "name": "Excluir categoria",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/categorias/{{categoriaId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Livros",
+      "item": [
+        {
+          "name": "Criar livro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoria\": {\n    \"id\": 1\n  },\n  \"autores\": [\n    {\n      \"id\": 1\n    }\n  ]\n}"
+            },
+            "url": "{{baseUrl}}/livros"
+          }
+        },
+        {
+          "name": "Listar livros",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/livros?page=0&size=10"
+          }
+        },
+        {
+          "name": "Buscar livro por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/livros/{{livroId}}"
+          }
+        },
+        {
+          "name": "Buscar livros por titulo",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/livros/buscar?titulo=Dom&page=0&size=10"
+          }
+        },
+        {
+          "name": "Atualizar livro",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Dom Casmurro - Edicao Atualizada\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoria\": {\n    \"id\": 1\n  },\n  \"autores\": [\n    {\n      \"id\": 1\n    }\n  ]\n}"
+            },
+            "url": "{{baseUrl}}/livros/{{livroId}}"
+          }
+        },
+        {
+          "name": "Excluir livro",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/livros/{{livroId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Emprestimos",
+      "item": [
+        {
+          "name": "Criar emprestimo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"ATIVO\",\n  \"usuario\": {\n    \"id\": 1\n  },\n  \"livro\": {\n    \"id\": 1\n  }\n}"
+            },
+            "url": "{{baseUrl}}/emprestimos"
+          }
+        },
+        {
+          "name": "Listar emprestimos",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/emprestimos?page=0&size=10"
+          }
+        },
+        {
+          "name": "Buscar emprestimo por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/emprestimos/{{emprestimoId}}"
+          }
+        },
+        {
+          "name": "Buscar emprestimos por status",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/emprestimos/buscar?status=ATIVO&page=0&size=10"
+          }
+        },
+        {
+          "name": "Atualizar emprestimo",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"DEVOLVIDO\",\n  \"usuario\": {\n    \"id\": 1\n  },\n  \"livro\": {\n    \"id\": 1\n  }\n}"
+            },
+            "url": "{{baseUrl}}/emprestimos/{{emprestimoId}}"
+          }
+        },
+        {
+          "name": "Excluir emprestimo",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/emprestimos/{{emprestimoId}}"
+          }
+        }
+      ]
+    }
+  ]
+}
