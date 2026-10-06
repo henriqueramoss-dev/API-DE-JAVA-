@@ -1,0 +1,60 @@
+name: Teste Biblioteca API
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - "biblioteca-api/**"
+      - ".github/workflows/test-biblioteca.yml"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: biblioteca-api
+
+    steps:
+      - name: Baixar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Compilar e testar
+        run: mvn -B clean test
+
+      - name: Gerar aplicacao
+        run: mvn -B package -DskipTests
+
+      - name: Iniciar API
+        run: |
+          java -jar target/*.jar > app.log 2>&1 &
+          echo $! > app.pid
+
+      - name: Verificar inicializacao e Swagger
+        run: |
+          for i in {1..30}; do
+            if curl -fsS http://localhost:8080/v3/api-docs > openapi.json; then
+              echo "API iniciada e OpenAPI disponivel."
+              exit 0
+            fi
+            sleep 2
+          done
+
+          cat app.log
+          exit 1
+
+      - name: Encerrar API
+        if: always()
+        run: |
+          if [ -f app.pid ]; then
+            kill $(cat app.pid) || true
+          fi
