@@ -19,13 +19,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller responsável pelos endpoints REST de perfis.
+ * Recebe requisições HTTP, delega as regras para a camada Service
+ * e devolve respostas documentadas, paginadas e com HATEOAS.
+ */
 @RestController
 @RequestMapping("/perfis")
 @Tag(name = "Perfis", description = "Endpoints para gerenciamento dos perfis dos usuários")
 public class PerfilController {
 
+    // Service concentra as regras de negócio desta entidade.
     private final PerfilService service;
+    // Assembler adiciona os links HATEOAS nas respostas.
     private final PerfilModelAssembler assembler;
+    // Responsável por transformar Page em PagedModel.
     private final PagedResourcesAssembler<Perfil> pagedResourcesAssembler;
 
     public PerfilController(
@@ -38,6 +46,7 @@ public class PerfilController {
         this.pagedResourcesAssembler = pagedResourcesAssembler;
     }
 
+    // Listagem paginada: aceita page, size e sort.
     @GetMapping
     @Operation(
         summary = "Listar perfis",
@@ -51,6 +60,7 @@ public class PerfilController {
         return ResponseEntity.ok(pagedResourcesAssembler.toModel(pagina, assembler));
     }
 
+    // Busca individual pelo identificador.
     @GetMapping("/{id}")
     @Operation(
         summary = "Buscar perfil por ID",
@@ -67,6 +77,7 @@ public class PerfilController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    // Cadastro de um novo recurso validado com Bean Validation.
     @PostMapping
     @Operation(
         summary = "Cadastrar perfil",
@@ -83,6 +94,7 @@ public class PerfilController {
             .orElse(ResponseEntity.badRequest().build());
     }
 
+    // Atualização de um recurso existente.
     @PutMapping("/{id}")
     @Operation(
         summary = "Atualizar perfil",
@@ -103,6 +115,7 @@ public class PerfilController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    // Exclusão pelo identificador.
     @DeleteMapping("/{id}")
     @Operation(
         summary = "Excluir perfil",
@@ -120,6 +133,7 @@ public class PerfilController {
         return ResponseEntity.noContent().build();
     }
 
+    // Consulta personalizada por telefone, mantendo a paginação.
     @GetMapping("/buscar")
     @Operation(
         summary = "Buscar perfis por telefone",
