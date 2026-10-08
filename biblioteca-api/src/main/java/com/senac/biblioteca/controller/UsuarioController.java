@@ -19,13 +19,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller responsável pelos endpoints REST de usuários.
+ * Recebe as requisições HTTP, chama a camada Service e devolve respostas
+ * com códigos HTTP, paginação e links HATEOAS.
+ */
 @RestController
 @RequestMapping("/usuarios")
 @Tag(name = "Usuários", description = "Endpoints para gerenciamento de usuários da biblioteca")
 public class UsuarioController {
 
+    // Service contém as regras de negócio relacionadas aos usuários.
     private final UsuarioService service;
+    // Assembler adiciona links HATEOAS às respostas.
     private final UsuarioModelAssembler assembler;
+    // Converte Page<Usuario> para uma resposta paginada compatível com HATEOAS.
     private final PagedResourcesAssembler<Usuario> pagedResourcesAssembler;
 
     public UsuarioController(
@@ -38,6 +46,7 @@ public class UsuarioController {
         this.pagedResourcesAssembler = pagedResourcesAssembler;
     }
 
+    // GET /usuarios: lista usuários usando page, size e sort.
     @GetMapping
     @Operation(
         summary = "Listar usuarios",
@@ -51,6 +60,7 @@ public class UsuarioController {
         return ResponseEntity.ok(pagedResourcesAssembler.toModel(pagina, assembler));
     }
 
+    // GET /usuarios/{id}: busca um usuário específico pelo identificador.
     @GetMapping("/{id}")
     @Operation(
         summary = "Buscar usuario por ID",
@@ -67,6 +77,7 @@ public class UsuarioController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    // POST /usuarios: cria um novo usuário após validar o JSON recebido.
     @PostMapping
     @Operation(
         summary = "Cadastrar usuário",
@@ -81,6 +92,7 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(assembler.toModel(criado));
     }
 
+    // PUT /usuarios/{id}: atualiza os dados de um usuário existente.
     @PutMapping("/{id}")
     @Operation(
         summary = "Atualizar usuario",
@@ -101,6 +113,7 @@ public class UsuarioController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    // DELETE /usuarios/{id}: remove um usuário existente.
     @DeleteMapping("/{id}")
     @Operation(
         summary = "Excluir usuario",
@@ -118,6 +131,7 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
+    // GET /usuarios/buscar: consulta personalizada por nome com paginação.
     @GetMapping("/buscar")
     @Operation(
         summary = "Buscar usuários por nome",
