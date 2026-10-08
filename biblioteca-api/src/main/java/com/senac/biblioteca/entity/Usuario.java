@@ -1,5 +1,6 @@
 package com.senac.biblioteca.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -37,10 +38,12 @@ public class Usuario {
     private String email;
 
     // Relacionamento One-to-One: um usuário possui um único perfil.
+    @JsonIgnore
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Perfil perfil;
 
     // Relacionamento One-to-Many: um usuário pode possuir vários empréstimos.
+    @JsonIgnore
     @OneToMany(mappedBy = "usuario")
     private List<Emprestimo> emprestimos = new ArrayList<>();
 
