@@ -12,20 +12,27 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Entidade principal do acervo da biblioteca.
+ * Cada livro pertence a uma categoria, pode possuir vários autores
+ * e pode aparecer em diferentes registros de empréstimo.
+ */
 @Entity
 @Table(name = "livros")
-@Schema(description = "Livro cadastrado na biblioteca")
+@Schema(description = "Livro cadastrado no acervo da biblioteca")
 public class Livro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Título obrigatório da obra.
     @NotBlank(message = "O título é obrigatório")
     @Size(max = 150, message = "O título deve ter no máximo 150 caracteres")
     @Schema(description = "Título do livro", example = "Dom Casmurro")
     private String titulo;
 
+    // ISBN identifica a edição do livro e não pode se repetir.
     @NotBlank(message = "O ISBN é obrigatório")
     @Size(max = 20, message = "O ISBN deve ter no máximo 20 caracteres")
     @Column(unique = true)
@@ -37,11 +44,13 @@ public class Livro {
     @Schema(description = "Ano de publicação", example = "1899")
     private Integer anoPublicacao;
 
+    // Many-to-One: vários livros podem pertencer à mesma categoria.
     @NotNull(message = "A categoria é obrigatória")
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 
+    // Many-to-Many: um livro pode ter vários autores e um autor vários livros.
     @ManyToMany
     @JoinTable(
         name = "livro_autor",
@@ -50,6 +59,7 @@ public class Livro {
     )
     private Set<Autor> autores = new HashSet<>();
 
+    // One-to-Many: um livro pode aparecer em vários empréstimos ao longo do tempo.
     @OneToMany(mappedBy = "livro")
     private List<Emprestimo> emprestimos = new ArrayList<>();
 
