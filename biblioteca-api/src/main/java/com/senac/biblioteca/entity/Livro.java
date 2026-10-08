@@ -1,5 +1,6 @@
 package com.senac.biblioteca.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
@@ -60,6 +61,7 @@ public class Livro {
     private Set<Autor> autores = new HashSet<>();
 
     // One-to-Many: um livro pode aparecer em vários empréstimos ao longo do tempo.
+    @JsonIgnore
     @OneToMany(mappedBy = "livro")
     private List<Emprestimo> emprestimos = new ArrayList<>();
 
