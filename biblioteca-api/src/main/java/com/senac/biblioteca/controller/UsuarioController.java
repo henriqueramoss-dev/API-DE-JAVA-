@@ -68,7 +68,8 @@ public class UsuarioController {
     )
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Usuario encontrado"),
-        @ApiResponse(responseCode = "404", description = "Usuario não encontrado")
+        @ApiResponse(responseCode = "404", description = "Usuario não encontrado"),
+        @ApiResponse(responseCode = "409", description = "Conflito de dados, como e-mail duplicado")
     })
     public ResponseEntity<EntityModel<Usuario>> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
@@ -85,7 +86,8 @@ public class UsuarioController {
     )
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Usuario criado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Dados inválidos")
+        @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+        @ApiResponse(responseCode = "409", description = "Conflito de dados, como valor duplicado")
     })
     public ResponseEntity<EntityModel<Usuario>> criar(@Valid @RequestBody Usuario item) {
         Usuario criado = service.criar(item);
