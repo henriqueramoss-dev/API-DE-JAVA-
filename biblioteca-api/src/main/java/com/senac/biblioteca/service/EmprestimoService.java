@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Camada de serviço de Emprestimo.
+ * Valida a existência do usuário e do livro antes de criar um empréstimo.
+ */
 @Service
 public class EmprestimoService {
 
@@ -30,14 +34,17 @@ public class EmprestimoService {
         this.livroRepository = livroRepository;
     }
 
+    // Lista empréstimos com paginação.
     public Page<Emprestimo> listar(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
+    // Busca um empréstimo pelo identificador.
     public Optional<Emprestimo> buscarPorId(Long id) {
         return repository.findById(id);
     }
 
+    // Só cria o empréstimo quando usuário e livro informados existem.
     public Optional<Emprestimo> criar(Emprestimo emprestimo) {
         if (emprestimo.getUsuario() == null || emprestimo.getUsuario().getId() == null) {
             return Optional.empty();
@@ -47,6 +54,7 @@ public class EmprestimoService {
             return Optional.empty();
         }
 
+        // Recupera os objetos relacionados no banco pelos ids recebidos.
         Optional<Usuario> usuario = usuarioRepository.findById(emprestimo.getUsuario().getId());
         Optional<Livro> livro = livroRepository.findById(emprestimo.getLivro().getId());
 
@@ -60,6 +68,7 @@ public class EmprestimoService {
         return Optional.of(repository.save(emprestimo));
     }
 
+    // Atualiza datas e status quando o empréstimo existe.
     public Optional<Emprestimo> atualizar(Long id, Emprestimo dados) {
         return repository.findById(id)
             .map(emprestimo -> {
@@ -70,6 +79,7 @@ public class EmprestimoService {
             });
     }
 
+    // Exclui pelo id quando encontrado.
     public boolean excluir(Long id) {
         if (!repository.existsById(id)) {
             return false;
@@ -79,6 +89,7 @@ public class EmprestimoService {
         return true;
     }
 
+    // Consulta personalizada pelo enum StatusEmprestimo, também paginada.
     public Page<Emprestimo> buscarPorStatus(StatusEmprestimo status, Pageable pageable) {
         return repository.findByStatus(status, pageable);
     }
