@@ -19,6 +19,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller responsável pelas rotas de livros.
+ * Disponibiliza CRUD, paginação e busca por título.
+ */
 @RestController
 @RequestMapping("/livros")
 @Tag(name = "Livros", description = "Endpoints para gerenciamento dos livros")
