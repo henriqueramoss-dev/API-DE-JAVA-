@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Configuração central da documentação Swagger/OpenAPI.
  *
- * Esta classe não cria endpoints. Ela define as informações gerais que aparecem
- * no topo do Swagger UI, como nome da API, descrição, versão, responsável,
- * termos de serviço, licença, servidor e link para a documentação externa.
+ * Esta classe define as informações gerais exibidas no topo do Swagger UI,
+ * como nome da API, descrição, versão, responsável, termos de serviço,
+ * licença, servidor local e documentação externa.
  */
 @Configuration
 @OpenAPIDefinition(
@@ -23,16 +23,21 @@ import org.springframework.context.annotation.Configuration;
         description = """
             API REST desenvolvida para o gerenciamento de uma biblioteca.
 
-            O sistema permite cadastrar e consultar usuários, perfis, autores,
-            categorias, livros e empréstimos. A API utiliza paginação nas
-            listagens, validação de dados, relacionamentos JPA, documentação
-            OpenAPI/Swagger e links HATEOAS nas respostas.
+            A aplicação permite cadastrar, consultar, atualizar e excluir
+            usuários, perfis, autores, categorias, livros e empréstimos.
 
-            Projeto acadêmico desenvolvido em Java com Spring Boot.
+            As rotas de listagem utilizam paginação, os dados de entrada são
+            validados com Bean Validation e as respostas utilizam códigos HTTP
+            adequados. A API também utiliza Spring Data JPA para persistência,
+            banco H2 para ambiente de testes, Swagger/OpenAPI para documentação
+            e HATEOAS para fornecer links de navegação entre os recursos.
+
+            Esta API foi desenvolvida para fins acadêmicos e deve ser utilizada
+            em ambiente local de desenvolvimento e testes.
             """,
-        termsOfService = "https://github.com/henriqueramoss-dev/API-DE-JAVA-/blob/develop/README.md",
+        termsOfService = "https://github.com/henriqueramoss-dev/API-DE-JAVA-/blob/develop/biblioteca-api/TERMS_OF_SERVICE.md",
         contact = @Contact(
-            name = "Henrique Ramos - Projeto Acadêmico",
+            name = "Henrique Ramos",
             url = "https://github.com/henriqueramoss-dev/API-DE-JAVA-"
         ),
         license = @License(
@@ -43,15 +48,15 @@ import org.springframework.context.annotation.Configuration;
     servers = {
         @Server(
             url = "http://localhost:8080",
-            description = "Servidor local para desenvolvimento e testes"
+            description = "Servidor local de desenvolvimento e testes"
         )
     },
     externalDocs = @ExternalDocumentation(
-        description = "Repositório e documentação completa da API de Biblioteca",
+        description = "Código-fonte e documentação completa do projeto",
         url = "https://github.com/henriqueramoss-dev/API-DE-JAVA-/tree/develop/biblioteca-api"
     )
 )
 public class OpenApiConfig {
 
-    // A classe não precisa de métodos porque toda a configuração é feita pelas anotações.
+    // Toda a personalização do Swagger é feita pelas anotações acima.
 }
