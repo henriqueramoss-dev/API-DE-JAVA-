@@ -24,16 +24,23 @@ import org.springframework.web.bind.annotation.*;
  * Recebe requisições HTTP, delega as regras para a camada Service
  * e devolve respostas documentadas, paginadas e com HATEOAS.
  */
+/**
+ * Controller dos perfis. Expõe o CRUD, a listagem paginada e a busca
+ * personalizada por telefone. A camada Service contém as regras de negócio.
+ */
 @RestController
 @RequestMapping("/perfis")
 @Tag(name = "Perfis", description = "Endpoints para gerenciamento dos perfis dos usuários")
 public class PerfilController {
 
     // Service concentra as regras de negócio desta entidade.
+    // Acesso às regras de negócio de Perfil.
     private final PerfilService service;
     // Assembler adiciona os links HATEOAS nas respostas.
+    // Adiciona links HATEOAS ao recurso retornado.
     private final PerfilModelAssembler assembler;
     // Responsável por transformar Page em PagedModel.
+    // Monta a resposta paginada no formato HATEOAS.
     private final PagedResourcesAssembler<Perfil> pagedResourcesAssembler;
 
     public PerfilController(
