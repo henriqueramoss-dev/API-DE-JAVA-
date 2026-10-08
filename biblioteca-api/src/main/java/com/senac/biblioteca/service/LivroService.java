@@ -14,6 +14,10 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Camada de serviço de Livro.
+ * Valida os relacionamentos com Categoria e Autor antes de salvar o livro.
+ */
 @Service
 public class LivroService {
 
@@ -31,15 +35,19 @@ public class LivroService {
         this.autorRepository = autorRepository;
     }
 
+    // Lista livros com paginação.
     public Page<Livro> listar(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
+    // Busca um livro pelo identificador.
     public Optional<Livro> buscarPorId(Long id) {
         return repository.findById(id);
     }
 
+    // Valida categoria e autores antes de persistir o novo livro.
     public Optional<Livro> criar(Livro livro) {
+        // O livro precisa informar uma categoria já cadastrada.
         if (livro.getCategoria() == null || livro.getCategoria().getId() == null) {
             return Optional.empty();
         }
@@ -52,6 +60,7 @@ public class LivroService {
 
         livro.setCategoria(categoria.get());
 
+        // Substitui os ids recebidos pelos objetos Autor existentes no banco.
         Set<Autor> autores = new HashSet<>();
         for (Autor autor : livro.getAutores()) {
             if (autor.getId() == null) {
@@ -71,6 +80,7 @@ public class LivroService {
         return Optional.of(repository.save(livro));
     }
 
+    // Atualiza os dados principais se o livro existir.
     public Optional<Livro> atualizar(Long id, Livro dados) {
         return repository.findById(id)
             .map(livro -> {
@@ -81,6 +91,7 @@ public class LivroService {
             });
     }
 
+    // Exclui o livro pelo id quando encontrado.
     public boolean excluir(Long id) {
         if (!repository.existsById(id)) {
             return false;
@@ -90,6 +101,7 @@ public class LivroService {
         return true;
     }
 
+    // Consulta personalizada por parte do título, com paginação.
     public Page<Livro> buscarPorTitulo(String titulo, Pageable pageable) {
         return repository.findByTituloContainingIgnoreCase(titulo, pageable);
     }
