@@ -20,6 +20,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller de empréstimos da biblioteca.
+ */
 @RestController
 @RequestMapping("/emprestimos")
 @Tag(name = "Empréstimos", description = "Endpoints para gerenciamento dos empréstimos")
