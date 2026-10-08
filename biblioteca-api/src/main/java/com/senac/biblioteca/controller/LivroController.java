@@ -62,7 +62,8 @@ public class LivroController {
     )
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Livro encontrado"),
-        @ApiResponse(responseCode = "404", description = "Livro não encontrado")
+        @ApiResponse(responseCode = "404", description = "Livro não encontrado"),
+        @ApiResponse(responseCode = "409", description = "Conflito de dados, como ISBN duplicado")
     })
     public ResponseEntity<EntityModel<Livro>> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
@@ -78,7 +79,8 @@ public class LivroController {
     )
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Livro criado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Dados inválidos")
+        @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+        @ApiResponse(responseCode = "409", description = "Conflito de dados, como valor duplicado")
     })
     public ResponseEntity<EntityModel<Livro>> criar(@Valid @RequestBody Livro item) {
         return service.criar(item)
