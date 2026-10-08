@@ -8,9 +8,24 @@ import org.springframework.stereotype.Component;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
+/**
+ * Responsável por transformar um objeto Autor em um EntityModel HATEOAS.
+ *
+ * O EntityModel mantém os dados da entidade e acrescenta links que ajudam
+ * o cliente da API a navegar entre as operações disponíveis.
+ */
 @Component
-public class AutorModelAssembler implements RepresentationModelAssembler<Autor, EntityModel<Autor>> {
+public class AutorModelAssembler
+        implements RepresentationModelAssembler<Autor, EntityModel<Autor>> {
 
+    /**
+     * Adiciona os links HATEOAS à resposta da entidade.
+     *
+     * self   -> consulta o próprio recurso
+     * update -> indica a rota utilizada para atualização
+     * delete -> indica a rota utilizada para exclusão
+     * autores -> retorna para a listagem paginada do recurso
+     */
     @Override
     public EntityModel<Autor> toModel(Autor item) {
         return EntityModel.of(
