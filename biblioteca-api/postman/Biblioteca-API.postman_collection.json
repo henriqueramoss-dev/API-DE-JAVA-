@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "Biblioteca API - Parte 1",
-    "description": "Coleção Postman para testar os endpoints da API de Biblioteca.",
+    "name": "Biblioteca API - Parte 1 - Testes HTTP",
+    "description": "Coleção Postman da API de Biblioteca com CRUD, paginação, buscas personalizadas e testes automáticos dos principais códigos HTTP (200, 201, 204, 400, 404 e 409).",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -32,6 +32,18 @@
     {
       "key": "emprestimoId",
       "value": "1"
+    },
+    {
+      "key": "usuarioConflitoId",
+      "value": ""
+    },
+    {
+      "key": "categoriaConflitoId",
+      "value": ""
+    },
+    {
+      "key": "livroConflitoId",
+      "value": ""
     }
   ],
   "item": [
@@ -53,28 +65,84 @@
               "raw": "{\n  \"nome\": \"Henrique Ramos\",\n  \"email\": \"henrique@email.com\"\n}"
             },
             "url": "{{baseUrl}}/usuarios"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    if (json.id) pm.collectionVariables.set(\"usuarioId\", json.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Listar usuarios",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/usuarios?page=0&size=10"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Buscar usuario por ID",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/usuarios/{{usuarioId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Buscar usuarios por nome",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/usuarios/buscar?nome=Henrique&page=0&size=10"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Atualizar usuario",
@@ -91,14 +159,40 @@
               "raw": "{\n  \"nome\": \"Henrique Ramos Atualizado\",\n  \"email\": \"henrique.atualizado@email.com\"\n}"
             },
             "url": "{{baseUrl}}/usuarios/{{usuarioId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Excluir usuario",
           "request": {
             "method": "DELETE",
             "url": "{{baseUrl}}/usuarios/{{usuarioId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -120,28 +214,84 @@
               "raw": "{\n  \"telefone\": \"11999999999\",\n  \"endereco\": \"Rua Exemplo, 100\",\n  \"dataNascimento\": \"2000-05-10\",\n  \"usuario\": {\n    \"id\": 1\n  }\n}"
             },
             "url": "{{baseUrl}}/perfis"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    if (json.id) pm.collectionVariables.set(\"perfilId\", json.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Listar perfis",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/perfis?page=0&size=10"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Buscar perfil por ID",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/perfis/{{perfilId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Buscar perfis por telefone",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/perfis/buscar?telefone=1199&page=0&size=10"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Atualizar perfil",
@@ -158,14 +308,40 @@
               "raw": "{\n  \"telefone\": \"11888888888\",\n  \"endereco\": \"Avenida Exemplo, 200\",\n  \"dataNascimento\": \"2000-05-10\",\n  \"usuario\": {\n    \"id\": 1\n  }\n}"
             },
             "url": "{{baseUrl}}/perfis/{{perfilId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Excluir perfil",
           "request": {
             "method": "DELETE",
             "url": "{{baseUrl}}/perfis/{{perfilId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -187,28 +363,84 @@
               "raw": "{\n  \"nome\": \"Machado de Assis\"\n}"
             },
             "url": "{{baseUrl}}/autores"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    if (json.id) pm.collectionVariables.set(\"autorId\", json.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Listar autores",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/autores?page=0&size=10"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Buscar autor por ID",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/autores/{{autorId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Buscar autores por nome",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/autores/buscar?nome=Machado&page=0&size=10"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Atualizar autor",
@@ -225,14 +457,40 @@
               "raw": "{\n  \"nome\": \"Machado de Assis Atualizado\"\n}"
             },
             "url": "{{baseUrl}}/autores/{{autorId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Excluir autor",
           "request": {
             "method": "DELETE",
             "url": "{{baseUrl}}/autores/{{autorId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -254,28 +512,84 @@
               "raw": "{\n  \"nome\": \"Romance\"\n}"
             },
             "url": "{{baseUrl}}/categorias"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    if (json.id) pm.collectionVariables.set(\"categoriaId\", json.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Listar categorias",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/categorias?page=0&size=10"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Buscar categoria por ID",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/categorias/{{categoriaId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Buscar categorias por nome",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/categorias/buscar?nome=Romance&page=0&size=10"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Atualizar categoria",
@@ -292,14 +606,40 @@
               "raw": "{\n  \"nome\": \"Literatura Brasileira\"\n}"
             },
             "url": "{{baseUrl}}/categorias/{{categoriaId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Excluir categoria",
           "request": {
             "method": "DELETE",
             "url": "{{baseUrl}}/categorias/{{categoriaId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -321,28 +661,84 @@
               "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoria\": {\n    \"id\": 1\n  },\n  \"autores\": [\n    {\n      \"id\": 1\n    }\n  ]\n}"
             },
             "url": "{{baseUrl}}/livros"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    if (json.id) pm.collectionVariables.set(\"livroId\", json.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Listar livros",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/livros?page=0&size=10"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Buscar livro por ID",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/livros/{{livroId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Buscar livros por titulo",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/livros/buscar?titulo=Dom&page=0&size=10"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Atualizar livro",
@@ -359,14 +755,40 @@
               "raw": "{\n  \"titulo\": \"Dom Casmurro - Edicao Atualizada\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoria\": {\n    \"id\": 1\n  },\n  \"autores\": [\n    {\n      \"id\": 1\n    }\n  ]\n}"
             },
             "url": "{{baseUrl}}/livros/{{livroId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Excluir livro",
           "request": {
             "method": "DELETE",
             "url": "{{baseUrl}}/livros/{{livroId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -388,28 +810,84 @@
               "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"ATIVO\",\n  \"usuario\": {\n    \"id\": 1\n  },\n  \"livro\": {\n    \"id\": 1\n  }\n}"
             },
             "url": "{{baseUrl}}/emprestimos"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    if (json.id) pm.collectionVariables.set(\"emprestimoId\", json.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Listar emprestimos",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/emprestimos?page=0&size=10"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Buscar emprestimo por ID",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/emprestimos/{{emprestimoId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Buscar emprestimos por status",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/emprestimos/buscar?status=ATIVO&page=0&size=10"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Atualizar emprestimo",
@@ -426,13 +904,332 @@
               "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"DEVOLVIDO\",\n  \"usuario\": {\n    \"id\": 1\n  },\n  \"livro\": {\n    \"id\": 1\n  }\n}"
             },
             "url": "{{baseUrl}}/emprestimos/{{emprestimoId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Excluir emprestimo",
           "request": {
             "method": "DELETE",
             "url": "{{baseUrl}}/emprestimos/{{emprestimoId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Testes de códigos HTTP",
+      "description": "Cenários prontos para validar os tratamentos de erro da API. Execute os testes de preparação antes dos testes 409.",
+      "item": [
+        {
+          "name": "400 - Usuario com e-mail inválido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Usuario Teste\",\n  \"email\": \"email-invalido\"\n}"
+            },
+            "url": "{{baseUrl}}/usuarios",
+            "description": "Valida Bean Validation. O e-mail não possui formato válido e deve retornar 400 Bad Request."
+          }
+        },
+        {
+          "name": "400 - Emprestimo com status inválido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"STATUS_INEXISTENTE\",\n  \"usuario\": { \"id\": 1 },\n  \"livro\": { \"id\": 1 }\n}"
+            },
+            "url": "{{baseUrl}}/emprestimos",
+            "description": "Valida tratamento de JSON/enum inválido. Deve retornar 400 Bad Request."
+          }
+        },
+        {
+          "name": "404 - Buscar usuario inexistente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/usuarios/999999",
+            "description": "Busca um ID que não existe e deve retornar 404 Not Found."
+          }
+        },
+        {
+          "name": "404 - Atualizar livro inexistente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Livro inexistente\",\n  \"isbn\": \"9999999999999\",\n  \"anoPublicacao\": 2026,\n  \"categoria\": { \"id\": 1 },\n  \"autores\": []\n}"
+            },
+            "url": "{{baseUrl}}/livros/999999",
+            "description": "Tenta atualizar um ID inexistente e deve retornar 404 Not Found."
+          }
+        },
+        {
+          "name": "404 - Excluir autor inexistente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/autores/999999",
+            "description": "Tenta excluir um ID inexistente e deve retornar 404 Not Found."
+          }
+        },
+        {
+          "name": "Preparar 409 - Criar usuario unico",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", function () { pm.response.to.have.status(201); });",
+                  "if (pm.response.code === 201) { const json = pm.response.json(); if (json.id) pm.collectionVariables.set(\"usuarioConflitoId\", json.id); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Usuario Conflito\",\n  \"email\": \"conflito.postman@biblioteca.local\"\n}"
+            },
+            "url": "{{baseUrl}}/usuarios",
+            "description": "Execute primeiro. Cria o registro que será usado para testar e-mail duplicado."
+          }
+        },
+        {
+          "name": "409 - Usuario com e-mail duplicado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 409\", function () {",
+                  "    pm.response.to.have.status(409);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Outro Usuario\",\n  \"email\": \"conflito.postman@biblioteca.local\"\n}"
+            },
+            "url": "{{baseUrl}}/usuarios",
+            "description": "Execute depois de 'Preparar 409 - Criar usuario unico'. Deve retornar 409 Conflict."
+          }
+        },
+        {
+          "name": "Preparar 409 - Criar categoria teste",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", function () { pm.response.to.have.status(201); });",
+                  "if (pm.response.code === 201) { const json = pm.response.json(); if (json.id) pm.collectionVariables.set(\"categoriaConflitoId\", json.id); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Categoria Postman\"\n}"
+            },
+            "url": "{{baseUrl}}/categorias",
+            "description": "Cria uma categoria para o cenário de ISBN duplicado."
+          }
+        },
+        {
+          "name": "Preparar 409 - Criar livro com ISBN unico",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", function () { pm.response.to.have.status(201); });",
+                  "if (pm.response.code === 201) { const json = pm.response.json(); if (json.id) pm.collectionVariables.set(\"livroConflitoId\", json.id); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Livro Postman 1\",\n  \"isbn\": \"POSTMAN-ISBN-001\",\n  \"anoPublicacao\": 2026,\n  \"categoria\": { \"id\": {{categoriaConflitoId}} },\n  \"autores\": []\n}"
+            },
+            "url": "{{baseUrl}}/livros",
+            "description": "Execute depois da criação da categoria de teste."
+          }
+        },
+        {
+          "name": "409 - Livro com ISBN duplicado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 409\", function () {",
+                  "    pm.response.to.have.status(409);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Livro Postman 2\",\n  \"isbn\": \"POSTMAN-ISBN-001\",\n  \"anoPublicacao\": 2026,\n  \"categoria\": { \"id\": {{categoriaConflitoId}} },\n  \"autores\": []\n}"
+            },
+            "url": "{{baseUrl}}/livros",
+            "description": "Execute depois de 'Preparar 409 - Criar livro com ISBN unico'. Deve retornar 409 Conflict."
           }
         }
       ]
