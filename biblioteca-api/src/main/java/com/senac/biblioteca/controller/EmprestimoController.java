@@ -44,8 +44,8 @@ public class EmprestimoController {
 
     @GetMapping
     @Operation(
-        summary = "Listar emprestimos",
-        description = "Retorna os emprestimos cadastrados de forma paginada."
+        summary = "Listar empréstimos",
+        description = "Retorna os empréstimos cadastrados de forma paginada."
     )
     @ApiResponse(responseCode = "200", description = "Listagem realizada com sucesso")
     public ResponseEntity<PagedModel<EntityModel<Emprestimo>>> listar(
@@ -57,12 +57,12 @@ public class EmprestimoController {
 
     @GetMapping("/{id}")
     @Operation(
-        summary = "Buscar emprestimo por ID",
-        description = "Retorna um emprestimo a partir do seu identificador."
+        summary = "Buscar empréstimo por ID",
+        description = "Retorna um empréstimo a partir do seu identificador."
     )
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Emprestimo encontrado"),
-        @ApiResponse(responseCode = "404", description = "Emprestimo não encontrado")
+        @ApiResponse(responseCode = "200", description = "Empréstimo encontrado"),
+        @ApiResponse(responseCode = "404", description = "Empréstimo não encontrado")
     })
     public ResponseEntity<EntityModel<Emprestimo>> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
@@ -77,7 +77,7 @@ public class EmprestimoController {
         description = "Cria um empréstimo para um usuário e um livro já cadastrados."
     )
     @ApiResponses({
-        @ApiResponse(responseCode = "201", description = "Emprestimo criado com sucesso"),
+        @ApiResponse(responseCode = "201", description = "Empréstimo criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos")
     })
     public ResponseEntity<EntityModel<Emprestimo>> criar(@Valid @RequestBody Emprestimo item) {
@@ -89,11 +89,11 @@ public class EmprestimoController {
 
     @PutMapping("/{id}")
     @Operation(
-        summary = "Atualizar emprestimo",
+        summary = "Atualizar empréstimo",
         description = "Atualiza datas e status de um empréstimo existente."
     )
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Emprestimo atualizado com sucesso"),
+        @ApiResponse(responseCode = "200", description = "Empréstimo atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos"),
         @ApiResponse(responseCode = "404", description = "Emprestimo não encontrado")
     })
@@ -109,11 +109,11 @@ public class EmprestimoController {
 
     @DeleteMapping("/{id}")
     @Operation(
-        summary = "Excluir emprestimo",
-        description = "Exclui um emprestimo pelo seu identificador."
+        summary = "Excluir empréstimo",
+        description = "Exclui um empréstimo pelo seu identificador."
     )
     @ApiResponses({
-        @ApiResponse(responseCode = "204", description = "Emprestimo excluído com sucesso"),
+        @ApiResponse(responseCode = "204", description = "Empréstimo excluído com sucesso"),
         @ApiResponse(responseCode = "404", description = "Emprestimo não encontrado")
     })
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
