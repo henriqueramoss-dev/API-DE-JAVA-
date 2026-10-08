@@ -19,6 +19,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller responsável pelas rotas de categorias.
+ * Organiza as operações HTTP e delega o acesso aos dados para o Service.
+ */
 @RestController
 @RequestMapping("/categorias")
 @Tag(name = "Categorias", description = "Endpoints para gerenciamento das categorias de livros")
