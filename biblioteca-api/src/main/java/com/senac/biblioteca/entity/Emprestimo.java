@@ -7,9 +7,13 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
+/**
+ * Entidade que registra o empréstimo de um livro para um usuário.
+ * Ela liga as entidades Usuario e Livro e controla datas e status do empréstimo.
+ */
 @Entity
 @Table(name = "emprestimos")
-@Schema(description = "Empréstimo de um livro para um usuário")
+@Schema(description = "Registro de empréstimo de um livro para um usuário")
 public class Emprestimo {
 
     @Id
@@ -24,16 +28,19 @@ public class Emprestimo {
     @Schema(description = "Data prevista para devolução", example = "2026-10-20")
     private LocalDate dataPrevistaDevolucao;
 
+    // O enum restringe o status a valores válidos definidos pelo sistema.
     @NotNull(message = "O status é obrigatório")
     @Enumerated(EnumType.STRING)
-    @Schema(description = "Status do empréstimo", example = "ATIVO")
+    @Schema(description = "Situação atual do empréstimo", example = "ATIVO")
     private StatusEmprestimo status;
 
+    // Many-to-One: um usuário pode possuir vários empréstimos.
     @NotNull(message = "O usuário é obrigatório")
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
+    // Many-to-One: um livro pode ter vários registros de empréstimo ao longo do tempo.
     @NotNull(message = "O livro é obrigatório")
     @ManyToOne
     @JoinColumn(name = "livro_id", nullable = false)
