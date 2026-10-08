@@ -75,7 +75,8 @@ public class PerfilController {
     )
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Perfil encontrado"),
-        @ApiResponse(responseCode = "404", description = "Perfil não encontrado")
+        @ApiResponse(responseCode = "404", description = "Perfil não encontrado"),
+        @ApiResponse(responseCode = "409", description = "Conflito de dados, como usuário já vinculado a outro perfil")
     })
     public ResponseEntity<EntityModel<Perfil>> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
@@ -92,7 +93,8 @@ public class PerfilController {
     )
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Perfil criado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Dados inválidos")
+        @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+        @ApiResponse(responseCode = "409", description = "Conflito de dados, como valor duplicado")
     })
     public ResponseEntity<EntityModel<Perfil>> criar(@Valid @RequestBody Perfil item) {
         return service.criar(item)
