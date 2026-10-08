@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Camada de serviço de Categoria.
+ * Separa as regras de negócio da camada de acesso ao banco.
+ */
 @Service
 public class CategoriaService {
 
@@ -17,18 +21,22 @@ public class CategoriaService {
         this.repository = repository;
     }
 
+    // Lista categorias com paginação.
     public Page<Categoria> listar(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
+    // Busca uma categoria pelo id.
     public Optional<Categoria> buscarPorId(Long id) {
         return repository.findById(id);
     }
 
+    // Salva uma nova categoria.
     public Categoria criar(Categoria categoria) {
         return repository.save(categoria);
     }
 
+    // Atualiza apenas quando a categoria já existe.
     public Optional<Categoria> atualizar(Long id, Categoria dados) {
         return repository.findById(id)
             .map(categoria -> {
@@ -37,6 +45,7 @@ public class CategoriaService {
             });
     }
 
+    // Remove a categoria se o id existir.
     public boolean excluir(Long id) {
         if (!repository.existsById(id)) {
             return false;
@@ -46,6 +55,7 @@ public class CategoriaService {
         return true;
     }
 
+    // Consulta personalizada por nome, mantendo a paginação.
     public Page<Categoria> buscarPorNome(String nome, Pageable pageable) {
         return repository.findByNomeContainingIgnoreCase(nome, pageable);
     }
