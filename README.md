@@ -1,4 +1,4 @@
-# API DE JAVA — Biblioteca
+# API de Biblioteca - Gestão de Acervo e Empréstimos
 
 Projeto acadêmico desenvolvido para a disciplina de Desenvolvimento de APIs com Spring Boot.
 
@@ -456,7 +456,7 @@ http://localhost:8080
 | Many-to-Many | Livro x Autor |
 | Bean Validation | Sim |
 | Enum | StatusEmprestimo |
-| CRUD completo | Previsto para todas as entidades |
+| CRUD completo | Sim, para todas as entidades |
 | 5 endpoints por entidade | Sim |
 | Pageable | Sim |
 | Consulta personalizada | Uma por entidade |
@@ -477,3 +477,23 @@ Não fazem parte desta etapa:
 - rate limiting;
 - versionamento da API;
 - recursos avançados previstos para etapas futuras.
+
+
+---
+
+## Termos de uso
+
+Esta API foi desenvolvida para fins acadêmicos no curso de Sistemas para Internet.
+
+Condições de uso:
+
+- utilizar o projeto para estudo, demonstração e avaliação acadêmica;
+- utilizar somente dados fictícios durante os testes;
+- não utilizar a aplicação em produção sem revisão adicional de segurança e persistência;
+- manter a identificação do projeto quando o código for utilizado como referência acadêmica.
+
+A documentação interativa da API está disponível, durante a execução, em:
+
+```text
+http://localhost:8080/swagger-ui.html
+```
