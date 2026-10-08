@@ -8,20 +8,27 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
+/**
+ * Entidade que guarda informações complementares do usuário.
+ * Ela demonstra o relacionamento One-to-One exigido no projeto.
+ */
 @Entity
 @Table(name = "perfis")
 @Schema(description = "Perfil com informações complementares do usuário")
 public class Perfil {
 
+    // Identificador único do perfil.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Valida o telefone informado pelo cliente da API.
     @NotBlank(message = "O telefone é obrigatório")
     @Size(max = 20, message = "O telefone deve ter no máximo 20 caracteres")
     @Schema(description = "Telefone do usuário", example = "11999999999")
     private String telefone;
 
+    // Endereço é obrigatório e possui limite de tamanho.
     @NotBlank(message = "O endereço é obrigatório")
     @Size(max = 200, message = "O endereço deve ter no máximo 200 caracteres")
     @Schema(description = "Endereço do usuário", example = "Rua Exemplo, 100")
@@ -31,11 +38,13 @@ public class Perfil {
     @Schema(description = "Data de nascimento", example = "2000-05-10")
     private LocalDate dataNascimento;
 
+    // Relacionamento One-to-One: cada perfil pertence a um único usuário.
     @NotNull(message = "O usuário é obrigatório")
     @OneToOne
     @JoinColumn(name = "usuario_id", nullable = false, unique = true)
     private Usuario usuario;
 
+    // Construtor vazio necessário para o JPA.
     public Perfil() {
     }
 
