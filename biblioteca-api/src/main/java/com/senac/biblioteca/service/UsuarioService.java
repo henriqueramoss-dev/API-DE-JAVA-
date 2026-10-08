@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Camada de serviço de Usuario.
+ * Concentra as regras de negócio e faz a ligação entre Controller e Repository.
+ */
 @Service
 public class UsuarioService {
 
@@ -17,18 +21,22 @@ public class UsuarioService {
         this.repository = repository;
     }
 
+    // Lista os usuários respeitando a paginação recebida pelo Controller.
     public Page<Usuario> listar(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
+    // Busca um usuário pelo id; Optional representa a possibilidade de não existir.
     public Optional<Usuario> buscarPorId(Long id) {
         return repository.findById(id);
     }
 
+    // Salva um novo usuário no banco.
     public Usuario criar(Usuario usuario) {
         return repository.save(usuario);
     }
 
+    // Atualiza somente se o usuário informado existir.
     public Optional<Usuario> atualizar(Long id, Usuario dados) {
         return repository.findById(id)
             .map(usuario -> {
@@ -38,6 +46,7 @@ public class UsuarioService {
             });
     }
 
+    // Retorna false se o id não existir e true quando a exclusão for realizada.
     public boolean excluir(Long id) {
         if (!repository.existsById(id)) {
             return false;
@@ -47,6 +56,7 @@ public class UsuarioService {
         return true;
     }
 
+    // Consulta personalizada por parte do nome, também paginada.
     public Page<Usuario> buscarPorNome(String nome, Pageable pageable) {
         return repository.findByNomeContainingIgnoreCase(nome, pageable);
     }
