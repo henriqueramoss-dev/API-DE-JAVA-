@@ -19,6 +19,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller de autores da biblioteca.
+ * Expõe as operações REST e utiliza o Service para acessar as regras de negócio.
+ */
 @RestController
 @RequestMapping("/autores")
 @Tag(name = "Autores", description = "Endpoints para gerenciamento dos autores")
