@@ -1,6 +1,7 @@
 package com.senac.biblioteca.controller;
 
 import com.senac.biblioteca.assembler.EmprestimoModelAssembler;
+import com.senac.biblioteca.dto.EmprestimoRequest;
 import com.senac.biblioteca.entity.Emprestimo;
 import com.senac.biblioteca.enums.StatusEmprestimo;
 import com.senac.biblioteca.service.EmprestimoService;
@@ -80,7 +81,7 @@ public class EmprestimoController {
         @ApiResponse(responseCode = "201", description = "Empréstimo criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos")
     })
-    public ResponseEntity<EntityModel<Emprestimo>> criar(@Valid @RequestBody Emprestimo item) {
+    public ResponseEntity<EntityModel<Emprestimo>> criar(@Valid @RequestBody EmprestimoRequest item) {
         return service.criar(item)
             .map(assembler::toModel)
             .map(model -> ResponseEntity.status(HttpStatus.CREATED).body(model))
@@ -99,7 +100,7 @@ public class EmprestimoController {
     })
     public ResponseEntity<EntityModel<Emprestimo>> atualizar(
         @PathVariable Long id,
-        @Valid @RequestBody Emprestimo item
+        @Valid @RequestBody EmprestimoRequest item
     ) {
         return service.atualizar(id, item)
             .map(assembler::toModel)
