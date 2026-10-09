@@ -1,6 +1,7 @@
 package com.senac.biblioteca.controller;
 
 import com.senac.biblioteca.assembler.LivroModelAssembler;
+import com.senac.biblioteca.dto.LivroRequest;
 import com.senac.biblioteca.entity.Livro;
 import com.senac.biblioteca.service.LivroService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -81,7 +82,7 @@ public class LivroController {
         @ApiResponse(responseCode = "400", description = "Dados inválidos"),
         @ApiResponse(responseCode = "409", description = "Conflito de dados, como valor duplicado")
     })
-    public ResponseEntity<EntityModel<Livro>> criar(@Valid @RequestBody Livro item) {
+    public ResponseEntity<EntityModel<Livro>> criar(@Valid @RequestBody LivroRequest item) {
         return service.criar(item)
             .map(assembler::toModel)
             .map(model -> ResponseEntity.status(HttpStatus.CREATED).body(model))
@@ -101,7 +102,7 @@ public class LivroController {
     })
     public ResponseEntity<EntityModel<Livro>> atualizar(
         @PathVariable Long id,
-        @Valid @RequestBody Livro item
+        @Valid @RequestBody LivroRequest item
     ) {
         return service.atualizar(id, item)
             .map(assembler::toModel)
