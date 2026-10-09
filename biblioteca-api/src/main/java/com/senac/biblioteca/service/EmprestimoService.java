@@ -80,7 +80,12 @@ public class EmprestimoService {
                 emprestimo.setStatus(dados.getStatus());
                 emprestimo.setUsuario(usuario.get());
                 emprestimo.setLivro(livro.get());
-                return repository.save(emprestimo);
+
+                // Salva a atualização e busca novamente o empréstimo com o
+                // EntityGraph do Repository. Assim, Livro, Categoria e Autores
+                // já chegam carregados para a resposta JSON/HATEOAS.
+                repository.save(emprestimo);
+                return repository.findById(id).orElse(emprestimo);
             });
     }
 
