@@ -1,5 +1,6 @@
 package com.senac.biblioteca.service;
 
+import com.senac.biblioteca.dto.EmprestimoRequest;
 import com.senac.biblioteca.entity.Emprestimo;
 import com.senac.biblioteca.entity.Livro;
 import com.senac.biblioteca.entity.Usuario;
@@ -45,25 +46,18 @@ public class EmprestimoService {
     }
 
     // Só cria o empréstimo quando usuário e livro informados existem.
-    public Optional<Emprestimo> criar(Emprestimo emprestimo) {
-        // O identificador do empréstimo é gerado automaticamente pelo banco.
-        emprestimo.setId(null);
-        if (emprestimo.getUsuario() == null || emprestimo.getUsuario().getId() == null) {
-            return Optional.empty();
-        }
-
-        if (emprestimo.getLivro() == null || emprestimo.getLivro().getId() == null) {
-            return Optional.empty();
-        }
-
-        // Recupera os objetos relacionados no banco pelos ids recebidos.
-        Optional<Usuario> usuario = usuarioRepository.findById(emprestimo.getUsuario().getId());
-        Optional<Livro> livro = livroRepository.findById(emprestimo.getLivro().getId());
+    public Optional<Emprestimo> criar(EmprestimoRequest dados) {
+        Optional<Usuario> usuario = usuarioRepository.findById(dados.getUsuarioId());
+        Optional<Livro> livro = livroRepository.findById(dados.getLivroId());
 
         if (usuario.isEmpty() || livro.isEmpty()) {
             return Optional.empty();
         }
 
+        Emprestimo emprestimo = new Emprestimo();
+        emprestimo.setDataEmprestimo(dados.getDataEmprestimo());
+        emprestimo.setDataPrevistaDevolucao(dados.getDataPrevistaDevolucao());
+        emprestimo.setStatus(dados.getStatus());
         emprestimo.setUsuario(usuario.get());
         emprestimo.setLivro(livro.get());
 
@@ -71,12 +65,21 @@ public class EmprestimoService {
     }
 
     // Atualiza datas e status quando o empréstimo existe.
-    public Optional<Emprestimo> atualizar(Long id, Emprestimo dados) {
+    public Optional<Emprestimo> atualizar(Long id, EmprestimoRequest dados) {
+        Optional<Usuario> usuario = usuarioRepository.findById(dados.getUsuarioId());
+        Optional<Livro> livro = livroRepository.findById(dados.getLivroId());
+
+        if (usuario.isEmpty() || livro.isEmpty()) {
+            return Optional.empty();
+        }
+
         return repository.findById(id)
             .map(emprestimo -> {
                 emprestimo.setDataEmprestimo(dados.getDataEmprestimo());
                 emprestimo.setDataPrevistaDevolucao(dados.getDataPrevistaDevolucao());
                 emprestimo.setStatus(dados.getStatus());
+                emprestimo.setUsuario(usuario.get());
+                emprestimo.setLivro(livro.get());
                 return repository.save(emprestimo);
             });
     }
