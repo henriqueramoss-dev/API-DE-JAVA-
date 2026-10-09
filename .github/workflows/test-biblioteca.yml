@@ -52,6 +52,24 @@ jobs:
           curl -fsS http://localhost:8080/usuarios?page=0\&size=10 > usuarios.json
           echo "Endpoint GET /usuarios respondeu com sucesso."
 
+      - name: Smoke test de livros com relacionamentos
+        run: |
+          curl -fsS -X POST http://localhost:8080/categorias \
+            -H "Content-Type: application/json" \
+            -d '{"nome":"Romance"}' > categoria.json
+
+          curl -fsS -X POST http://localhost:8080/autores \
+            -H "Content-Type: application/json" \
+            -d '{"nome":"Machado de Assis"}' > autor.json
+
+          curl -fsS -X POST http://localhost:8080/livros \
+            -H "Content-Type: application/json" \
+            -d '{"titulo":"Dom Casmurro","isbn":"9788535910663","anoPublicacao":1899,"categoria":{"id":1},"autores":[{"id":1}]}' > livro.json
+
+          curl -fsS "http://localhost:8080/livros?page=0&size=10" > livros.json
+          grep -q "Dom Casmurro" livros.json
+          echo "Endpoint GET /livros respondeu com os relacionamentos corretamente."
+
       - name: Encerrar API
         if: always()
         run: |
