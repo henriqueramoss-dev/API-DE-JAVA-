@@ -62,8 +62,7 @@ public class LivroController {
     )
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Livro encontrado"),
-        @ApiResponse(responseCode = "404", description = "Livro não encontrado"),
-        @ApiResponse(responseCode = "409", description = "ISBN já cadastrado para outro livro")
+        @ApiResponse(responseCode = "404", description = "Livro não encontrado")
     })
     public ResponseEntity<EntityModel<Livro>> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
@@ -97,7 +96,8 @@ public class LivroController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Livro atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos"),
-        @ApiResponse(responseCode = "404", description = "Livro não encontrado")
+        @ApiResponse(responseCode = "404", description = "Livro não encontrado"),
+        @ApiResponse(responseCode = "409", description = "ISBN já cadastrado para outro livro")
     })
     public ResponseEntity<EntityModel<Livro>> atualizar(
         @PathVariable Long id,
