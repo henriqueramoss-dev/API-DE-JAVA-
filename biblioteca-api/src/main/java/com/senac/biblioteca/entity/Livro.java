@@ -25,6 +25,7 @@ public class Livro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "Identificador gerado automaticamente pelo banco", accessMode = Schema.AccessMode.READ_ONLY, example = "1")
     private Long id;
 
     // Título obrigatório da obra.
@@ -70,6 +71,14 @@ public class Livro {
 
     public Long getId() {
         return id;
+    }
+
+    /**
+     * Usado pela camada Service para garantir que novos cadastros
+     * sempre recebam o ID gerado automaticamente pelo banco.
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitulo() {
