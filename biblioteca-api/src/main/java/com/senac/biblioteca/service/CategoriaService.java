@@ -33,6 +33,7 @@ public class CategoriaService {
 
     // Salva uma nova categoria.
     public Categoria criar(Categoria categoria) {
+        categoria.setId(null);
         return repository.save(categoria);
     }
 
