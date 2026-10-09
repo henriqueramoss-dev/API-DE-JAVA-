@@ -95,7 +95,7 @@ public class EmprestimoController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Empréstimo atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos"),
-        @ApiResponse(responseCode = "404", description = "Emprestimo não encontrado")
+        @ApiResponse(responseCode = "404", description = "Empréstimo não encontrado")
     })
     public ResponseEntity<EntityModel<Emprestimo>> atualizar(
         @PathVariable Long id,
@@ -114,7 +114,7 @@ public class EmprestimoController {
     )
     @ApiResponses({
         @ApiResponse(responseCode = "204", description = "Empréstimo excluído com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Emprestimo não encontrado")
+        @ApiResponse(responseCode = "404", description = "Empréstimo não encontrado")
     })
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         if (!service.excluir(id)) {
