@@ -221,7 +221,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"telefone\": \"11999999999\",\n  \"endereco\": \"Rua Exemplo, 100\",\n  \"dataNascimento\": \"2000-05-10\",\n  \"usuario\": {\n    \"id\": 1\n  }\n}",
+              "raw": "{\n  \"telefone\": \"11999999999\",\n  \"endereco\": \"Rua Exemplo, 100\",\n  \"dataNascimento\": \"2000-05-10\",\n  \"usuarioId\": {{usuarioId}}\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -320,7 +320,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"telefone\": \"11888888888\",\n  \"endereco\": \"Avenida Exemplo, 200\",\n  \"dataNascimento\": \"2000-05-10\",\n  \"usuario\": {\n    \"id\": 1\n  }\n}",
+              "raw": "{\n  \"telefone\": \"11999999999\",\n  \"endereco\": \"Rua Exemplo, 100\",\n  \"dataNascimento\": \"2000-05-10\",\n  \"usuarioId\": {{usuarioId}}\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -698,7 +698,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoria\": {\n    \"id\": 1\n  },\n  \"autores\": [\n    {\n      \"id\": 1\n    }\n  ]\n}",
+              "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoriaId\": {{categoriaId}},\n  \"autoresIds\": [{{autorId}}]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -797,7 +797,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"titulo\": \"Dom Casmurro - Edicao Atualizada\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoria\": {\n    \"id\": 1\n  },\n  \"autores\": [\n    {\n      \"id\": 1\n    }\n  ]\n}",
+              "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoriaId\": {{categoriaId}},\n  \"autoresIds\": [{{autorId}}]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -857,7 +857,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"ATIVO\",\n  \"usuario\": {\n    \"id\": 1\n  },\n  \"livro\": {\n    \"id\": 1\n  }\n}",
+              "raw": "{\n  \"dataEmprestimo\": \"2026-10-09\",\n  \"dataPrevistaDevolucao\": \"2026-10-25\",\n  \"status\": \"ATIVO\",\n  \"usuarioId\": {{usuarioId}},\n  \"livroId\": {{livroId}}\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -956,7 +956,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"DEVOLVIDO\",\n  \"usuario\": {\n    \"id\": 1\n  },\n  \"livro\": {\n    \"id\": 1\n  }\n}",
+              "raw": "{\n  \"dataEmprestimo\": \"2026-10-09\",\n  \"dataPrevistaDevolucao\": \"2026-10-25\",\n  \"status\": \"ATIVO\",\n  \"usuarioId\": {{usuarioId}},\n  \"livroId\": {{livroId}}\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1066,7 +1066,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"STATUS_INEXISTENTE\",\n  \"usuario\": { \"id\": 1 },\n  \"livro\": { \"id\": 1 }\n}",
+              "raw": "{\n  \"dataEmprestimo\": \"2026-10-09\",\n  \"dataPrevistaDevolucao\": \"2026-10-25\",\n  \"status\": \"ATIVO\",\n  \"usuarioId\": {{usuarioId}},\n  \"livroId\": {{livroId}}\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1123,7 +1123,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"titulo\": \"Livro inexistente\",\n  \"isbn\": \"9999999999999\",\n  \"anoPublicacao\": 2026,\n  \"categoria\": { \"id\": 1 },\n  \"autores\": []\n}",
+              "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoriaId\": {{categoriaId}},\n  \"autoresIds\": [{{autorId}}]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1285,7 +1285,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"titulo\": \"Livro Postman 1\",\n  \"isbn\": \"POSTMAN-ISBN-001\",\n  \"anoPublicacao\": 2026,\n  \"categoria\": { \"id\": {{categoriaConflitoId}} },\n  \"autores\": []\n}",
+              "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoriaId\": {{categoriaId}},\n  \"autoresIds\": [{{autorId}}]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1321,7 +1321,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"titulo\": \"Livro Postman 2\",\n  \"isbn\": \"POSTMAN-ISBN-001\",\n  \"anoPublicacao\": 2026,\n  \"categoria\": { \"id\": {{categoriaConflitoId}} },\n  \"autores\": []\n}",
+              "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoriaId\": {{categoriaId}},\n  \"autoresIds\": [{{autorId}}]\n}",
               "options": {
                 "raw": {
                   "language": "json"
