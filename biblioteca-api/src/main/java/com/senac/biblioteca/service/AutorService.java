@@ -33,6 +33,7 @@ public class AutorService {
 
     // Persiste um novo autor.
     public Autor criar(Autor autor) {
+        autor.setId(null);
         return repository.save(autor);
     }
 
