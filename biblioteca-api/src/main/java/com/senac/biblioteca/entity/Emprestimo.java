@@ -18,6 +18,7 @@ public class Emprestimo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "Identificador gerado automaticamente pelo banco", accessMode = Schema.AccessMode.READ_ONLY, example = "1")
     private Long id;
 
     @NotNull(message = "A data do empréstimo é obrigatória")
@@ -51,6 +52,14 @@ public class Emprestimo {
 
     public Long getId() {
         return id;
+    }
+
+    /**
+     * Usado pela camada Service para garantir que novos cadastros
+     * sempre recebam o ID gerado automaticamente pelo banco.
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDate getDataEmprestimo() {
