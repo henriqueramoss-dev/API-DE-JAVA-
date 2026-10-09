@@ -1,5 +1,6 @@
 package com.senac.biblioteca.service;
 
+import com.senac.biblioteca.dto.PerfilRequest;
 import com.senac.biblioteca.entity.Perfil;
 import com.senac.biblioteca.entity.Usuario;
 import com.senac.biblioteca.repository.PerfilRepository;
@@ -36,30 +37,33 @@ public class PerfilService {
     }
 
     // Antes de salvar, confirma se o usuário informado existe.
-    public Optional<Perfil> criar(Perfil perfil) {
-        // O identificador do perfil é gerado automaticamente pelo banco.
-        perfil.setId(null);
-        if (perfil.getUsuario() == null || perfil.getUsuario().getId() == null) {
-            return Optional.empty();
-        }
-
-        Optional<Usuario> usuario = usuarioRepository.findById(perfil.getUsuario().getId());
+    public Optional<Perfil> criar(PerfilRequest dados) {
+        Optional<Usuario> usuario = usuarioRepository.findById(dados.getUsuarioId());
 
         if (usuario.isEmpty()) {
             return Optional.empty();
         }
 
+        Perfil perfil = new Perfil();
+        perfil.setTelefone(dados.getTelefone());
+        perfil.setEndereco(dados.getEndereco());
+        perfil.setDataNascimento(dados.getDataNascimento());
         perfil.setUsuario(usuario.get());
+
         return Optional.of(repository.save(perfil));
     }
 
     // Atualiza os dados do perfil quando o id é válido.
-    public Optional<Perfil> atualizar(Long id, Perfil dados) {
+    public Optional<Perfil> atualizar(Long id, PerfilRequest dados) {
         return repository.findById(id)
             .map(perfil -> {
                 perfil.setTelefone(dados.getTelefone());
                 perfil.setEndereco(dados.getEndereco());
                 perfil.setDataNascimento(dados.getDataNascimento());
+
+                usuarioRepository.findById(dados.getUsuarioId())
+                    .ifPresent(perfil::setUsuario);
+
                 return repository.save(perfil);
             });
     }
