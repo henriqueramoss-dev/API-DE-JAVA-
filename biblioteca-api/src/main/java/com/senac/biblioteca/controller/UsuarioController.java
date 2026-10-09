@@ -68,8 +68,7 @@ public class UsuarioController {
     )
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Usuário encontrado"),
-        @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
-        @ApiResponse(responseCode = "409", description = "E-mail já cadastrado para outro usuário")
+        @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
     public ResponseEntity<EntityModel<Usuario>> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
@@ -103,7 +102,8 @@ public class UsuarioController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos"),
-        @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+        @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
+        @ApiResponse(responseCode = "409", description = "E-mail já cadastrado para outro usuário")
     })
     public ResponseEntity<EntityModel<Usuario>> atualizar(
         @PathVariable Long id,
