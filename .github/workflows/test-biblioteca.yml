@@ -64,7 +64,7 @@ jobs:
 
           curl -fsS -X POST http://localhost:8080/livros \
             -H "Content-Type: application/json" \
-            -d '{"titulo":"Dom Casmurro","isbn":"9788535910663","anoPublicacao":1899,"categoria":{"id":1},"autores":[{"id":1}]}' > livro.json
+            -d '{"titulo":"Dom Casmurro","isbn":"9788535910663","anoPublicacao":1899,"categoriaId":1,"autoresIds":[1]}' > livro.json
 
           curl -fsS "http://localhost:8080/livros?page=0&size=10" > livros.json
           grep -q "Dom Casmurro" livros.json
@@ -104,12 +104,12 @@ jobs:
 
           req "POST livro" "201" -X POST http://localhost:8080/livros \
             -H "Content-Type: application/json" \
-            -d "{\"titulo\":\"Livro Emprestimo\",\"isbn\":\"EMP-001\",\"anoPublicacao\":2026,\"categoria\":{\"id\":$CATEGORIA_ID},\"autores\":[{\"id\":$AUTOR_ID}]}"
+            -d "{\"titulo\":\"Livro Emprestimo\",\"isbn\":\"EMP-001\",\"anoPublicacao\":2026,\"categoriaId\":$CATEGORIA_ID,\"autoresIds\":[$AUTOR_ID]}"
           LIVRO_ID=$(jq -r '.id' resposta.json)
 
           req "POST emprestimo" "201" -X POST http://localhost:8080/emprestimos \
             -H "Content-Type: application/json" \
-            -d "{\"dataEmprestimo\":\"2026-10-06\",\"dataPrevistaDevolucao\":\"2026-10-25\",\"status\":\"ATIVO\",\"usuario\":{\"id\":$USUARIO_ID},\"livro\":{\"id\":$LIVRO_ID}}"
+            -d "{\"dataEmprestimo\":\"2026-10-06\",\"dataPrevistaDevolucao\":\"2026-10-25\",\"status\":\"ATIVO\",\"usuarioId\":$USUARIO_ID,\"livroId\":$LIVRO_ID}"
           EMPRESTIMO_ID=$(jq -r '.id' resposta.json)
 
           req "GET emprestimos" "200" "http://localhost:8080/emprestimos?page=0&size=10"
@@ -118,7 +118,7 @@ jobs:
 
           req "PUT emprestimo" "200" -X PUT "http://localhost:8080/emprestimos/$EMPRESTIMO_ID" \
             -H "Content-Type: application/json" \
-            -d "{\"dataEmprestimo\":\"2026-10-06\",\"dataPrevistaDevolucao\":\"2026-10-25\",\"status\":\"DEVOLVIDO\",\"usuario\":{\"id\":$USUARIO_ID},\"livro\":{\"id\":$LIVRO_ID}}"
+            -d "{\"dataEmprestimo\":\"2026-10-06\",\"dataPrevistaDevolucao\":\"2026-10-25\",\"status\":\"DEVOLVIDO\",\"usuarioId\":$USUARIO_ID,\"livroId\":$LIVRO_ID}"
 
           grep -q "DEVOLVIDO" resposta.json
           echo "Fluxo de empréstimos concluído com sucesso."
