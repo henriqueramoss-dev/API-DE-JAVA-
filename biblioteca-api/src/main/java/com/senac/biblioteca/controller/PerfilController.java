@@ -1,6 +1,7 @@
 package com.senac.biblioteca.controller;
 
 import com.senac.biblioteca.assembler.PerfilModelAssembler;
+import com.senac.biblioteca.dto.PerfilRequest;
 import com.senac.biblioteca.entity.Perfil;
 import com.senac.biblioteca.service.PerfilService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -95,7 +96,7 @@ public class PerfilController {
         @ApiResponse(responseCode = "400", description = "Dados inválidos"),
         @ApiResponse(responseCode = "409", description = "Conflito de dados, como valor duplicado")
     })
-    public ResponseEntity<EntityModel<Perfil>> criar(@Valid @RequestBody Perfil item) {
+    public ResponseEntity<EntityModel<Perfil>> criar(@Valid @RequestBody PerfilRequest item) {
         return service.criar(item)
             .map(assembler::toModel)
             .map(model -> ResponseEntity.status(HttpStatus.CREATED).body(model))
