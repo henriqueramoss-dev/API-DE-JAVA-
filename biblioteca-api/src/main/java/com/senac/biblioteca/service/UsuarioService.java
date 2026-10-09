@@ -33,6 +33,9 @@ public class UsuarioService {
 
     // Salva um novo usuário no banco.
     public Usuario criar(Usuario usuario) {
+        // O ID de um novo recurso sempre deve ser gerado pelo banco.
+        // Isso também evita erro caso o Swagger envie um ID de exemplo.
+        usuario.setId(null);
         return repository.save(usuario);
     }
 
