@@ -49,8 +49,8 @@ public class UsuarioController {
     // GET /usuarios: lista usuários usando page, size e sort.
     @GetMapping
     @Operation(
-        summary = "Listar usuarios",
-        description = "Retorna os usuarios cadastrados de forma paginada."
+        summary = "Listar usuários",
+        description = "Retorna os usuários cadastrados de forma paginada."
     )
     @ApiResponse(responseCode = "200", description = "Listagem realizada com sucesso")
     public ResponseEntity<PagedModel<EntityModel<Usuario>>> listar(
@@ -63,13 +63,13 @@ public class UsuarioController {
     // GET /usuarios/{id}: busca um usuário específico pelo identificador.
     @GetMapping("/{id}")
     @Operation(
-        summary = "Buscar usuario por ID",
-        description = "Retorna um usuario a partir do seu identificador."
+        summary = "Buscar usuário por ID",
+        description = "Retorna um usuário a partir do seu identificador."
     )
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Usuario encontrado"),
-        @ApiResponse(responseCode = "404", description = "Usuario não encontrado"),
-        @ApiResponse(responseCode = "409", description = "Conflito de dados, como e-mail duplicado")
+        @ApiResponse(responseCode = "200", description = "Usuário encontrado"),
+        @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
+        @ApiResponse(responseCode = "409", description = "E-mail já cadastrado para outro usuário")
     })
     public ResponseEntity<EntityModel<Usuario>> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
@@ -85,7 +85,7 @@ public class UsuarioController {
         description = "Cria um novo usuário na biblioteca."
     )
     @ApiResponses({
-        @ApiResponse(responseCode = "201", description = "Usuario criado com sucesso"),
+        @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos"),
         @ApiResponse(responseCode = "409", description = "Conflito de dados, como valor duplicado")
     })
@@ -97,13 +97,13 @@ public class UsuarioController {
     // PUT /usuarios/{id}: atualiza os dados de um usuário existente.
     @PutMapping("/{id}")
     @Operation(
-        summary = "Atualizar usuario",
+        summary = "Atualizar usuário",
         description = "Atualiza o nome e o e-mail de um usuário existente."
     )
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Usuario atualizado com sucesso"),
+        @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos"),
-        @ApiResponse(responseCode = "404", description = "Usuario não encontrado")
+        @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
     public ResponseEntity<EntityModel<Usuario>> atualizar(
         @PathVariable Long id,
@@ -118,12 +118,12 @@ public class UsuarioController {
     // DELETE /usuarios/{id}: remove um usuário existente.
     @DeleteMapping("/{id}")
     @Operation(
-        summary = "Excluir usuario",
-        description = "Exclui um usuario pelo seu identificador."
+        summary = "Excluir usuário",
+        description = "Exclui um usuário pelo seu identificador."
     )
     @ApiResponses({
-        @ApiResponse(responseCode = "204", description = "Usuario excluído com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Usuario não encontrado")
+        @ApiResponse(responseCode = "204", description = "Usuário excluído com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         if (!service.excluir(id)) {
