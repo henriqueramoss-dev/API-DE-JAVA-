@@ -4,19 +4,36 @@ import com.senac.biblioteca.entity.Emprestimo;
 import com.senac.biblioteca.enums.StatusEmprestimo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
 
 /**
  * Camada de acesso aos dados da entidade Emprestimo.
  *
- * JpaRepository fornece o CRUD e a paginação. O método personalizado abaixo
- * permite filtrar empréstimos pelo status informado.
+ * Como o projeto utiliza spring.jpa.open-in-view=false, os relacionamentos
+ * necessários para montar o JSON precisam ser carregados durante a consulta.
  */
 public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long> {
 
     /**
-     * Busca empréstimos por status, como ATIVO, DEVOLVIDO ou ATRASADO.
-     * O resultado também é paginado.
+     * Lista os empréstimos já trazendo usuário, livro, categoria e autores.
      */
+    @Override
+    @EntityGraph(attributePaths = {"usuario", "livro", "livro.categoria", "livro.autores"})
+    Page<Emprestimo> findAll(Pageable pageable);
+
+    /**
+     * Busca um empréstimo por ID com os relacionamentos necessários carregados.
+     */
+    @Override
+    @EntityGraph(attributePaths = {"usuario", "livro", "livro.categoria", "livro.autores"})
+    Optional<Emprestimo> findById(Long id);
+
+    /**
+     * Busca empréstimos pelo status informado e retorna os resultados paginados.
+     */
+    @EntityGraph(attributePaths = {"usuario", "livro", "livro.categoria", "livro.autores"})
     Page<Emprestimo> findByStatus(StatusEmprestimo status, Pageable pageable);
 }
