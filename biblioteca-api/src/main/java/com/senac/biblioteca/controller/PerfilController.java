@@ -116,7 +116,7 @@ public class PerfilController {
     })
     public ResponseEntity<EntityModel<Perfil>> atualizar(
         @PathVariable Long id,
-        @Valid @RequestBody Perfil item
+        @Valid @RequestBody PerfilRequest item
     ) {
         return service.atualizar(id, item)
             .map(assembler::toModel)
