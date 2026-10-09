@@ -46,6 +46,8 @@ public class EmprestimoService {
 
     // Só cria o empréstimo quando usuário e livro informados existem.
     public Optional<Emprestimo> criar(Emprestimo emprestimo) {
+        // O identificador do empréstimo é gerado automaticamente pelo banco.
+        emprestimo.setId(null);
         if (emprestimo.getUsuario() == null || emprestimo.getUsuario().getId() == null) {
             return Optional.empty();
         }
