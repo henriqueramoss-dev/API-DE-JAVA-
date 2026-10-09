@@ -22,6 +22,7 @@ public class Usuario {
     // Identificador único gerado automaticamente pelo banco.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "Identificador gerado automaticamente pelo banco", accessMode = Schema.AccessMode.READ_ONLY, example = "1")
     private Long id;
 
     // Bean Validation impede nome vazio e limita seu tamanho.
@@ -54,6 +55,14 @@ public class Usuario {
     // Getters permitem a leitura dos atributos; setters permitem suas alterações.
     public Long getId() {
         return id;
+    }
+
+    /**
+     * Usado pela camada Service para garantir que novos cadastros
+     * sempre recebam o ID gerado automaticamente pelo banco.
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
