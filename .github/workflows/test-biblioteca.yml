@@ -70,6 +70,37 @@ jobs:
           grep -q "Dom Casmurro" livros.json
           echo "Endpoint GET /livros respondeu com os relacionamentos corretamente."
 
+      - name: Smoke test de emprestimos
+        run: |
+          curl -fsS -X POST http://localhost:8080/usuarios \
+            -H "Content-Type: application/json" \
+            -d '{"nome":"Usuario Emprestimo","email":"emprestimo@teste.local"}' > usuario-emprestimo.json
+
+          curl -fsS -X POST http://localhost:8080/categorias \
+            -H "Content-Type: application/json" \
+            -d '{"nome":"Categoria Emprestimo"}' > categoria-emprestimo.json
+
+          curl -fsS -X POST http://localhost:8080/autores \
+            -H "Content-Type: application/json" \
+            -d '{"nome":"Autor Emprestimo"}' > autor-emprestimo.json
+
+          curl -fsS -X POST http://localhost:8080/livros \
+            -H "Content-Type: application/json" \
+            -d '{"titulo":"Livro Emprestimo","isbn":"EMP-001","anoPublicacao":2026,"categoria":{"id":2},"autores":[{"id":2}]}' > livro-emprestimo.json
+
+          curl -fsS -X POST http://localhost:8080/emprestimos \
+            -H "Content-Type: application/json" \
+            -d '{"dataEmprestimo":"2026-10-06","dataPrevistaDevolucao":"2026-10-25","status":"ATIVO","usuario":{"id":2},"livro":{"id":2}}' > emprestimo.json
+
+          curl -fsS "http://localhost:8080/emprestimos?page=0&size=10" > emprestimos.json
+
+          curl -fsS -X PUT http://localhost:8080/emprestimos/1 \
+            -H "Content-Type: application/json" \
+            -d '{"dataEmprestimo":"2026-10-06","dataPrevistaDevolucao":"2026-10-25","status":"DEVOLVIDO","usuario":{"id":2},"livro":{"id":2}}' > emprestimo-atualizado.json
+
+          grep -q "DEVOLVIDO" emprestimo-atualizado.json
+          echo "CRUD principal de emprestimos respondeu com sucesso."
+
       - name: Encerrar API
         if: always()
         run: |
