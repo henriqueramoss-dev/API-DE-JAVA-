@@ -37,6 +37,8 @@ public class PerfilService {
 
     // Antes de salvar, confirma se o usuário informado existe.
     public Optional<Perfil> criar(Perfil perfil) {
+        // O identificador do perfil é gerado automaticamente pelo banco.
+        perfil.setId(null);
         if (perfil.getUsuario() == null || perfil.getUsuario().getId() == null) {
             return Optional.empty();
         }
