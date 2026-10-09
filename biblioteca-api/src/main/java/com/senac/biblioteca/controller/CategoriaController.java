@@ -82,7 +82,7 @@ public class CategoriaController {
     })
     public ResponseEntity<EntityModel<Categoria>> criar(@Valid @RequestBody Categoria item) {
         Categoria criada = service.criar(item);
-        return ResponseEntity.status(HttpStatus.CREATED).body(assembler.toModel(criado));
+        return ResponseEntity.status(HttpStatus.CREATED).body(assembler.toModel(criada));
     }
 
     @PutMapping("/{id}")
