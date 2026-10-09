@@ -75,8 +75,7 @@ public class PerfilController {
     )
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Perfil encontrado"),
-        @ApiResponse(responseCode = "404", description = "Perfil não encontrado"),
-        @ApiResponse(responseCode = "409", description = "Conflito de dados, como usuário já vinculado a outro perfil")
+        @ApiResponse(responseCode = "404", description = "Perfil não encontrado")
     })
     public ResponseEntity<EntityModel<Perfil>> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
