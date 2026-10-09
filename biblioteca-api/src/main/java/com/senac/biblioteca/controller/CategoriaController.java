@@ -45,7 +45,7 @@ public class CategoriaController {
     @GetMapping
     @Operation(
         summary = "Listar categorias",
-        description = "Retorna os categorias cadastrados de forma paginada."
+        description = "Retorna as categorias cadastradas de forma paginada."
     )
     @ApiResponse(responseCode = "200", description = "Listagem realizada com sucesso")
     public ResponseEntity<PagedModel<EntityModel<Categoria>>> listar(
@@ -58,11 +58,11 @@ public class CategoriaController {
     @GetMapping("/{id}")
     @Operation(
         summary = "Buscar categoria por ID",
-        description = "Retorna um categoria a partir do seu identificador."
+        description = "Retorna uma categoria a partir do seu identificador."
     )
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Categoria encontrado"),
-        @ApiResponse(responseCode = "404", description = "Categoria não encontrado")
+        @ApiResponse(responseCode = "200", description = "Categoria encontrada"),
+        @ApiResponse(responseCode = "404", description = "Categoria não encontrada")
     })
     public ResponseEntity<EntityModel<Categoria>> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
@@ -77,11 +77,11 @@ public class CategoriaController {
         description = "Cria uma nova categoria de livros."
     )
     @ApiResponses({
-        @ApiResponse(responseCode = "201", description = "Categoria criado com sucesso"),
+        @ApiResponse(responseCode = "201", description = "Categoria criada com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos")
     })
     public ResponseEntity<EntityModel<Categoria>> criar(@Valid @RequestBody Categoria item) {
-        Categoria criado = service.criar(item);
+        Categoria criada = service.criar(item);
         return ResponseEntity.status(HttpStatus.CREATED).body(assembler.toModel(criado));
     }
 
@@ -91,9 +91,9 @@ public class CategoriaController {
         description = "Atualiza o nome de uma categoria existente."
     )
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Categoria atualizado com sucesso"),
+        @ApiResponse(responseCode = "200", description = "Categoria atualizada com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos"),
-        @ApiResponse(responseCode = "404", description = "Categoria não encontrado")
+        @ApiResponse(responseCode = "404", description = "Categoria não encontrada")
     })
     public ResponseEntity<EntityModel<Categoria>> atualizar(
         @PathVariable Long id,
@@ -108,11 +108,11 @@ public class CategoriaController {
     @DeleteMapping("/{id}")
     @Operation(
         summary = "Excluir categoria",
-        description = "Exclui um categoria pelo seu identificador."
+        description = "Exclui uma categoria pelo seu identificador."
     )
     @ApiResponses({
-        @ApiResponse(responseCode = "204", description = "Categoria excluído com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Categoria não encontrado")
+        @ApiResponse(responseCode = "204", description = "Categoria excluída com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Categoria não encontrada")
     })
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         if (!service.excluir(id)) {
