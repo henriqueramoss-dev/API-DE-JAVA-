@@ -62,7 +62,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Henrique Ramos\",\n  \"email\": \"henrique@email.com\"\n}"
+              "raw": "{\n  \"nome\": \"Henrique Ramos\",\n  \"email\": \"henrique@email.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/usuarios"
           },
@@ -156,7 +161,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Henrique Ramos Atualizado\",\n  \"email\": \"henrique.atualizado@email.com\"\n}"
+              "raw": "{\n  \"nome\": \"Henrique Ramos Atualizado\",\n  \"email\": \"henrique.atualizado@email.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/usuarios/{{usuarioId}}"
           },
@@ -211,7 +221,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"telefone\": \"11999999999\",\n  \"endereco\": \"Rua Exemplo, 100\",\n  \"dataNascimento\": \"2000-05-10\",\n  \"usuario\": {\n    \"id\": 1\n  }\n}"
+              "raw": "{\n  \"telefone\": \"11999999999\",\n  \"endereco\": \"Rua Exemplo, 100\",\n  \"dataNascimento\": \"2000-05-10\",\n  \"usuario\": {\n    \"id\": 1\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/perfis"
           },
@@ -305,7 +320,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"telefone\": \"11888888888\",\n  \"endereco\": \"Avenida Exemplo, 200\",\n  \"dataNascimento\": \"2000-05-10\",\n  \"usuario\": {\n    \"id\": 1\n  }\n}"
+              "raw": "{\n  \"telefone\": \"11888888888\",\n  \"endereco\": \"Avenida Exemplo, 200\",\n  \"dataNascimento\": \"2000-05-10\",\n  \"usuario\": {\n    \"id\": 1\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/perfis/{{perfilId}}"
           },
@@ -360,7 +380,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Machado de Assis\"\n}"
+              "raw": "{\n  \"nome\": \"Machado de Assis\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/autores"
           },
@@ -454,7 +479,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Machado de Assis Atualizado\"\n}"
+              "raw": "{\n  \"nome\": \"Machado de Assis Atualizado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/autores/{{autorId}}"
           },
@@ -509,7 +539,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Romance\"\n}"
+              "raw": "{\n  \"nome\": \"Romance\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/categorias"
           },
@@ -603,7 +638,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Literatura Brasileira\"\n}"
+              "raw": "{\n  \"nome\": \"Literatura Brasileira\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/categorias/{{categoriaId}}"
           },
@@ -658,7 +698,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoria\": {\n    \"id\": 1\n  },\n  \"autores\": [\n    {\n      \"id\": 1\n    }\n  ]\n}"
+              "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoria\": {\n    \"id\": 1\n  },\n  \"autores\": [\n    {\n      \"id\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/livros"
           },
@@ -752,7 +797,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"titulo\": \"Dom Casmurro - Edicao Atualizada\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoria\": {\n    \"id\": 1\n  },\n  \"autores\": [\n    {\n      \"id\": 1\n    }\n  ]\n}"
+              "raw": "{\n  \"titulo\": \"Dom Casmurro - Edicao Atualizada\",\n  \"isbn\": \"9788535910663\",\n  \"anoPublicacao\": 1899,\n  \"categoria\": {\n    \"id\": 1\n  },\n  \"autores\": [\n    {\n      \"id\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/livros/{{livroId}}"
           },
@@ -807,7 +857,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"ATIVO\",\n  \"usuario\": {\n    \"id\": 1\n  },\n  \"livro\": {\n    \"id\": 1\n  }\n}"
+              "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"ATIVO\",\n  \"usuario\": {\n    \"id\": 1\n  },\n  \"livro\": {\n    \"id\": 1\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/emprestimos"
           },
@@ -901,7 +956,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"DEVOLVIDO\",\n  \"usuario\": {\n    \"id\": 1\n  },\n  \"livro\": {\n    \"id\": 1\n  }\n}"
+              "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"DEVOLVIDO\",\n  \"usuario\": {\n    \"id\": 1\n  },\n  \"livro\": {\n    \"id\": 1\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/emprestimos/{{emprestimoId}}"
           },
@@ -970,7 +1030,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Usuario Teste\",\n  \"email\": \"email-invalido\"\n}"
+              "raw": "{\n  \"nome\": \"Usuario Teste\",\n  \"email\": \"email-invalido\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/usuarios",
             "description": "Valida Bean Validation. O e-mail não possui formato válido e deve retornar 400 Bad Request."
@@ -1001,7 +1066,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"STATUS_INEXISTENTE\",\n  \"usuario\": { \"id\": 1 },\n  \"livro\": { \"id\": 1 }\n}"
+              "raw": "{\n  \"dataEmprestimo\": \"2026-10-06\",\n  \"dataPrevistaDevolucao\": \"2026-10-20\",\n  \"status\": \"STATUS_INEXISTENTE\",\n  \"usuario\": { \"id\": 1 },\n  \"livro\": { \"id\": 1 }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/emprestimos",
             "description": "Valida tratamento de JSON/enum inválido. Deve retornar 400 Bad Request."
@@ -1053,7 +1123,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"titulo\": \"Livro inexistente\",\n  \"isbn\": \"9999999999999\",\n  \"anoPublicacao\": 2026,\n  \"categoria\": { \"id\": 1 },\n  \"autores\": []\n}"
+              "raw": "{\n  \"titulo\": \"Livro inexistente\",\n  \"isbn\": \"9999999999999\",\n  \"anoPublicacao\": 2026,\n  \"categoria\": { \"id\": 1 },\n  \"autores\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/livros/999999",
             "description": "Tenta atualizar um ID inexistente e deve retornar 404 Not Found."
@@ -1104,7 +1179,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Usuario Conflito\",\n  \"email\": \"conflito.postman@biblioteca.local\"\n}"
+              "raw": "{\n  \"nome\": \"Usuario Conflito\",\n  \"email\": \"conflito.postman@biblioteca.local\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/usuarios",
             "description": "Execute primeiro. Cria o registro que será usado para testar e-mail duplicado."
@@ -1135,7 +1215,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Outro Usuario\",\n  \"email\": \"conflito.postman@biblioteca.local\"\n}"
+              "raw": "{\n  \"nome\": \"Outro Usuario\",\n  \"email\": \"conflito.postman@biblioteca.local\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/usuarios",
             "description": "Execute depois de 'Preparar 409 - Criar usuario unico'. Deve retornar 409 Conflict."
@@ -1165,7 +1250,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Categoria Postman\"\n}"
+              "raw": "{\n  \"nome\": \"Categoria Postman\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/categorias",
             "description": "Cria uma categoria para o cenário de ISBN duplicado."
@@ -1195,7 +1285,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"titulo\": \"Livro Postman 1\",\n  \"isbn\": \"POSTMAN-ISBN-001\",\n  \"anoPublicacao\": 2026,\n  \"categoria\": { \"id\": {{categoriaConflitoId}} },\n  \"autores\": []\n}"
+              "raw": "{\n  \"titulo\": \"Livro Postman 1\",\n  \"isbn\": \"POSTMAN-ISBN-001\",\n  \"anoPublicacao\": 2026,\n  \"categoria\": { \"id\": {{categoriaConflitoId}} },\n  \"autores\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/livros",
             "description": "Execute depois da criação da categoria de teste."
@@ -1226,7 +1321,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"titulo\": \"Livro Postman 2\",\n  \"isbn\": \"POSTMAN-ISBN-001\",\n  \"anoPublicacao\": 2026,\n  \"categoria\": { \"id\": {{categoriaConflitoId}} },\n  \"autores\": []\n}"
+              "raw": "{\n  \"titulo\": \"Livro Postman 2\",\n  \"isbn\": \"POSTMAN-ISBN-001\",\n  \"anoPublicacao\": 2026,\n  \"categoria\": { \"id\": {{categoriaConflitoId}} },\n  \"autores\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": "{{baseUrl}}/livros",
             "description": "Execute depois de 'Preparar 409 - Criar livro com ISBN unico'. Deve retornar 409 Conflict."
