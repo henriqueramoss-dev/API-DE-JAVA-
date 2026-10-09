@@ -1,5 +1,6 @@
 package com.senac.biblioteca.service;
 
+import com.senac.biblioteca.dto.LivroRequest;
 import com.senac.biblioteca.entity.Autor;
 import com.senac.biblioteca.entity.Categoria;
 import com.senac.biblioteca.entity.Livro;
@@ -46,49 +47,59 @@ public class LivroService {
     }
 
     // Valida categoria e autores antes de persistir o novo livro.
-    public Optional<Livro> criar(Livro livro) {
-        // O identificador do livro é gerado automaticamente pelo banco.
-        livro.setId(null);
-        // O livro precisa informar uma categoria já cadastrada.
-        if (livro.getCategoria() == null || livro.getCategoria().getId() == null) {
-            return Optional.empty();
-        }
-
-        Optional<Categoria> categoria = categoriaRepository.findById(livro.getCategoria().getId());
+    public Optional<Livro> criar(LivroRequest dados) {
+        Optional<Categoria> categoria = categoriaRepository.findById(dados.getCategoriaId());
 
         if (categoria.isEmpty()) {
             return Optional.empty();
         }
 
-        livro.setCategoria(categoria.get());
-
-        // Substitui os ids recebidos pelos objetos Autor existentes no banco.
         Set<Autor> autores = new HashSet<>();
-        for (Autor autor : livro.getAutores()) {
-            if (autor.getId() == null) {
-                return Optional.empty();
+        if (dados.getAutoresIds() != null) {
+            for (Long autorId : dados.getAutoresIds()) {
+                Optional<Autor> autor = autorRepository.findById(autorId);
+                if (autor.isEmpty()) {
+                    return Optional.empty();
+                }
+                autores.add(autor.get());
             }
-
-            Optional<Autor> autorEncontrado = autorRepository.findById(autor.getId());
-
-            if (autorEncontrado.isEmpty()) {
-                return Optional.empty();
-            }
-
-            autores.add(autorEncontrado.get());
         }
 
+        Livro livro = new Livro();
+        livro.setTitulo(dados.getTitulo());
+        livro.setIsbn(dados.getIsbn());
+        livro.setAnoPublicacao(dados.getAnoPublicacao());
+        livro.setCategoria(categoria.get());
         livro.setAutores(autores);
+
         return Optional.of(repository.save(livro));
     }
 
     // Atualiza os dados principais se o livro existir.
-    public Optional<Livro> atualizar(Long id, Livro dados) {
+    public Optional<Livro> atualizar(Long id, LivroRequest dados) {
+        Optional<Categoria> categoria = categoriaRepository.findById(dados.getCategoriaId());
+        if (categoria.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Set<Autor> autores = new HashSet<>();
+        if (dados.getAutoresIds() != null) {
+            for (Long autorId : dados.getAutoresIds()) {
+                Optional<Autor> autor = autorRepository.findById(autorId);
+                if (autor.isEmpty()) {
+                    return Optional.empty();
+                }
+                autores.add(autor.get());
+            }
+        }
+
         return repository.findById(id)
             .map(livro -> {
                 livro.setTitulo(dados.getTitulo());
                 livro.setIsbn(dados.getIsbn());
                 livro.setAnoPublicacao(dados.getAnoPublicacao());
+                livro.setCategoria(categoria.get());
+                livro.setAutores(autores);
                 return repository.save(livro);
             });
     }
