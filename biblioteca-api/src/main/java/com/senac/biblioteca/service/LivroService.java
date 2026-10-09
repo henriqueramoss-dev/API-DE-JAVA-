@@ -47,6 +47,8 @@ public class LivroService {
 
     // Valida categoria e autores antes de persistir o novo livro.
     public Optional<Livro> criar(Livro livro) {
+        // O identificador do livro é gerado automaticamente pelo banco.
+        livro.setId(null);
         // O livro precisa informar uma categoria já cadastrada.
         if (livro.getCategoria() == null || livro.getCategoria().getId() == null) {
             return Optional.empty();
