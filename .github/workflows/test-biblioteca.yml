@@ -72,37 +72,56 @@ jobs:
 
       - name: Smoke test de emprestimos
         run: |
-          STATUS_USUARIO=$(curl -sS -o usuario-emprestimo.json -w "%{http_code}" -X POST http://localhost:8080/usuarios \
+          set -e
+          req() {
+            NAME="$1"; EXPECTED="$2"; shift 2
+            STATUS=$(curl -sS -o resposta.json -w "%{http_code}" "$@")
+            echo "$NAME -> HTTP $STATUS"
+            cat resposta.json || true
+            echo
+            if [ "$STATUS" != "$EXPECTED" ]; then
+              echo "Falha em: $NAME. Esperado $EXPECTED, recebido $STATUS"
+              echo "===== app.log ====="
+              cat app.log || true
+              exit 1
+            fi
+          }
+
+          req "POST usuario" "201" -X POST http://localhost:8080/usuarios \
             -H "Content-Type: application/json" \
-            -d '{"id":99,"nome":"Usuario Emprestimo","email":"emprestimo@teste.local"}')
-          test "$STATUS_USUARIO" = "201"
-          grep -q '"id":1' usuario-emprestimo.json
-          echo "POST /usuarios retornou 201 e ignorou o ID enviado pelo cliente."
+            -d '{"id":99,"nome":"Usuario Emprestimo","email":"emprestimo@teste.local"}'
+          USUARIO_ID=$(jq -r '.id' resposta.json)
 
-          curl -fsS -X POST http://localhost:8080/categorias \
+          req "POST categoria" "201" -X POST http://localhost:8080/categorias \
             -H "Content-Type: application/json" \
-            -d '{"nome":"Categoria Emprestimo"}' > categoria-emprestimo.json
+            -d '{"nome":"Categoria Emprestimo"}'
+          CATEGORIA_ID=$(jq -r '.id' resposta.json)
 
-          curl -fsS -X POST http://localhost:8080/autores \
+          req "POST autor" "201" -X POST http://localhost:8080/autores \
             -H "Content-Type: application/json" \
-            -d '{"nome":"Autor Emprestimo"}' > autor-emprestimo.json
+            -d '{"nome":"Autor Emprestimo"}'
+          AUTOR_ID=$(jq -r '.id' resposta.json)
 
-          curl -fsS -X POST http://localhost:8080/livros \
+          req "POST livro" "201" -X POST http://localhost:8080/livros \
             -H "Content-Type: application/json" \
-            -d '{"titulo":"Livro Emprestimo","isbn":"EMP-001","anoPublicacao":2026,"categoria":{"id":2},"autores":[{"id":2}]}' > livro-emprestimo.json
+            -d "{\"titulo\":\"Livro Emprestimo\",\"isbn\":\"EMP-001\",\"anoPublicacao\":2026,\"categoria\":{\"id\":$CATEGORIA_ID},\"autores\":[{\"id\":$AUTOR_ID}]}"
+          LIVRO_ID=$(jq -r '.id' resposta.json)
 
-          curl -fsS -X POST http://localhost:8080/emprestimos \
+          req "POST emprestimo" "201" -X POST http://localhost:8080/emprestimos \
             -H "Content-Type: application/json" \
-            -d '{"dataEmprestimo":"2026-10-06","dataPrevistaDevolucao":"2026-10-25","status":"ATIVO","usuario":{"id":1},"livro":{"id":2}}' > emprestimo.json
+            -d "{\"dataEmprestimo\":\"2026-10-06\",\"dataPrevistaDevolucao\":\"2026-10-25\",\"status\":\"ATIVO\",\"usuario\":{\"id\":$USUARIO_ID},\"livro\":{\"id\":$LIVRO_ID}}"
+          EMPRESTIMO_ID=$(jq -r '.id' resposta.json)
 
-          curl -fsS "http://localhost:8080/emprestimos?page=0&size=10" > emprestimos.json
+          req "GET emprestimos" "200" "http://localhost:8080/emprestimos?page=0&size=10"
+          req "GET emprestimo por ID" "200" "http://localhost:8080/emprestimos/$EMPRESTIMO_ID"
+          req "GET emprestimos por status" "200" "http://localhost:8080/emprestimos/buscar?status=ATIVO&page=0&size=10"
 
-          curl -fsS -X PUT http://localhost:8080/emprestimos/1 \
+          req "PUT emprestimo" "200" -X PUT "http://localhost:8080/emprestimos/$EMPRESTIMO_ID" \
             -H "Content-Type: application/json" \
-            -d '{"dataEmprestimo":"2026-10-06","dataPrevistaDevolucao":"2026-10-25","status":"DEVOLVIDO","usuario":{"id":1},"livro":{"id":2}}' > emprestimo-atualizado.json
+            -d "{\"dataEmprestimo\":\"2026-10-06\",\"dataPrevistaDevolucao\":\"2026-10-25\",\"status\":\"DEVOLVIDO\",\"usuario\":{\"id\":$USUARIO_ID},\"livro\":{\"id\":$LIVRO_ID}}"
 
-          grep -q "DEVOLVIDO" emprestimo-atualizado.json
-          echo "CRUD principal de emprestimos respondeu com sucesso."
+          grep -q "DEVOLVIDO" resposta.json
+          echo "Fluxo de empréstimos concluído com sucesso."
 
       - name: Encerrar API
         if: always()
