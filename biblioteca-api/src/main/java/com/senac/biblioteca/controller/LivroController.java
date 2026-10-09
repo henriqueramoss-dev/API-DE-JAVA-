@@ -63,7 +63,7 @@ public class LivroController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Livro encontrado"),
         @ApiResponse(responseCode = "404", description = "Livro não encontrado"),
-        @ApiResponse(responseCode = "409", description = "Conflito de dados, como ISBN duplicado")
+        @ApiResponse(responseCode = "409", description = "ISBN já cadastrado para outro livro")
     })
     public ResponseEntity<EntityModel<Livro>> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
