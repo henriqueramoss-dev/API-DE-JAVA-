@@ -21,6 +21,7 @@ public class Autor {
     // Chave primária gerada automaticamente pelo banco.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "Identificador gerado automaticamente pelo banco", accessMode = Schema.AccessMode.READ_ONLY, example = "1")
     private Long id;
 
     // Nome obrigatório do autor, validado antes de salvar.
@@ -39,6 +40,14 @@ public class Autor {
 
     public Long getId() {
         return id;
+    }
+
+    /**
+     * Usado pela camada Service para garantir que novos cadastros
+     * sempre recebam o ID gerado automaticamente pelo banco.
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
